@@ -14,7 +14,7 @@ describe 'apache::mod::event', :type => :class do
         :id                     => 'root',
         :kernel                 => 'FreeBSD',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     it { is_expected.to contain_class("apache::params") }
@@ -31,7 +31,7 @@ describe 'apache::mod::event', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     it { is_expected.to contain_class("apache::params") }
@@ -49,7 +49,7 @@ describe 'apache::mod::event', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
 
@@ -72,7 +72,7 @@ describe 'apache::mod::event', :type => :class do
           :threadlimit            => '7',
           :listenbacklog          => '8',
           :maxrequestworkers      => '9',
-          :maxconnectionsperchild => '10',
+          :maxconnectionsperchild => '10'
         }
       end
 
@@ -102,7 +102,7 @@ describe 'apache::mod::event', :type => :class do
           :threadlimit            => '7',
           :listenbacklog          => '8',
           :maxrequestworkers      => :undef,
-          :maxconnectionsperchild => :undef,
+          :maxconnectionsperchild => :undef
         }
       end
 
@@ -132,7 +132,7 @@ describe 'apache::mod::event', :type => :class do
           :threadlimit            => false,
           :listenbacklog          => false,
           :maxrequestworkers      => false,
-          :maxconnectionsperchild => false,
+          :maxconnectionsperchild => false
         }
       end
 
@@ -152,7 +152,7 @@ describe 'apache::mod::event', :type => :class do
     context "with Apache version < 2.4" do
       let :params do
         {
-          :apache_version => '2.2',
+          :apache_version => '2.2'
         }
       end
 
@@ -165,15 +165,16 @@ describe 'apache::mod::event', :type => :class do
     context "with Apache version >= 2.4" do
       let :params do
         {
-          :apache_version => '2.4',
+          :apache_version => '2.4'
         }
       end
 
-      it { is_expected.to contain_file("/etc/apache2/mods-available/event.load").with({
-        'ensure'  => 'file',
-        'content' => "LoadModule mpm_event_module /usr/lib/apache2/modules/mod_mpm_event.so\n"
-        })
-      }
+      it do
+        is_expected.to contain_file("/etc/apache2/mods-available/event.load").with(
+          'ensure'  => 'file',
+          'content' => "LoadModule mpm_event_module /usr/lib/apache2/modules/mod_mpm_event.so\n"
+        )
+      end
       it { is_expected.to contain_file("/etc/apache2/mods-enabled/event.load").with_ensure('link') }
     end
   end
@@ -187,14 +188,14 @@ describe 'apache::mod::event', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
 
     context "with Apache version >= 2.4" do
       let :params do
         {
-          :apache_version => '2.4',
+          :apache_version => '2.4'
         }
       end
 
@@ -204,11 +205,12 @@ describe 'apache::mod::event', :type => :class do
 
       it { is_expected.to contain_file("/etc/httpd/conf.d/event.conf").with_ensure('file') }
 
-      it { is_expected.to contain_file("/etc/httpd/conf.d/event.load").with({
-        'ensure'  => 'file',
-        'content' => "LoadModule mpm_event_module modules/mod_mpm_event.so\n",
-        })
-      }
+      it do
+        is_expected.to contain_file("/etc/httpd/conf.d/event.load").with(
+          'ensure'  => 'file',
+          'content' => "LoadModule mpm_event_module modules/mod_mpm_event.so\n"
+        )
+      end
     end
   end
 end

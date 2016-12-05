@@ -12,7 +12,7 @@ describe 'apache::mod::pagespeed', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     it { is_expected.to contain_class("apache::params") }
@@ -20,12 +20,22 @@ describe 'apache::mod::pagespeed', :type => :class do
     it { is_expected.to contain_package("mod-pagespeed-stable") }
 
     context "when setting additional_configuration to a Hash" do
-      let :params do { :additional_configuration => { 'Key' => 'Value' } } end
+      let :params do
+        {
+          :additional_configuration => {
+            'Key' => 'Value'
+          }
+        }
+      end
       it { is_expected.to contain_file('pagespeed.conf').with_content /Key Value/ }
     end
 
     context "when setting additional_configuration to an Array" do
-      let :params do { :additional_configuration => [ 'Key Value' ] } end
+      let :params do
+        {
+          :additional_configuration => [ 'Key Value' ]
+        }
+      end
       it { is_expected.to contain_file('pagespeed.conf').with_content /Key Value/ }
     end
   end
@@ -40,7 +50,7 @@ describe 'apache::mod::pagespeed', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     it { is_expected.to contain_class("apache::params") }

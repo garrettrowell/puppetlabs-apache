@@ -12,42 +12,32 @@ describe 'apache::mod::passenger class' do
 
     case fact('operatingsystem')
     when 'Ubuntu'
-      case fact('lsbdistrelease')
-      when '10.04'
-        passenger_root = '/usr'
-        passenger_ruby = '/usr/bin/ruby'
-      when '12.04'
-        passenger_root = '/usr'
-        passenger_ruby = '/usr/bin/ruby'
-      when '14.04'
-        passenger_root         = '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini'
-        passenger_ruby         = '/usr/bin/ruby'
-        passenger_default_ruby = '/usr/bin/ruby'
-      when '16.04'
-        passenger_root         = '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini'
-        passenger_ruby         = '/usr/bin/ruby'
-        passenger_default_ruby = '/usr/bin/ruby'
-      else
-        # This may or may not work on Ubuntu releases other than the above
-        passenger_root = '/usr'
-        passenger_ruby = '/usr/bin/ruby'
-      end
+      passenger_root += case fact('lsbdistrelease')
+                        when '10.04'
+                          '/usr'
+                        when '12.04'
+                          '/usr'
+                        when '14.04'
+                          '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini'
+                        when '16.04'
+                          '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini'
+                        else
+                          # This may or may not work on Ubuntu releases other than the above
+                          passenger_root = '/usr'
+                        end
     when 'Debian'
-      case fact('lsbdistcodename')
-      when 'wheezy'
-        passenger_root = '/usr'
-        passenger_ruby = '/usr/bin/ruby'
-      when 'jessie'
-        passenger_root         = '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini'
-        passenger_ruby         = '/usr/bin/ruby'
-        passenger_default_ruby = '/usr/bin/ruby'
-      else
-        # This may or may not work on Debian releases other than the above
-        passenger_root = '/usr'
-        passenger_ruby = '/usr/bin/ruby'
-      end
+      passenger_root += case fact('lsbdistcodename')
+                        when 'wheezy'
+                          '/usr'
+                        when 'jessie'
+                          '/usr/lib/ruby/vendor_ruby/phusion_passenger/locations.ini'
+                        else
+                          # This may or may not work on Debian releases other than the above
+                          '/usr'
+                        end
     end
 
+    passenger_ruby = '/usr/bin/ruby'
     passenger_module_path = '/usr/lib/apache2/modules/mod_passenger.so'
     rackapp_user = 'www-data'
     rackapp_group = 'www-data'
@@ -202,7 +192,6 @@ describe 'apache::mod::passenger class' do
           expect(r.exit_code).to eq(0)
         end
       end
-
     end
   end
 end

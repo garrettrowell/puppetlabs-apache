@@ -19,14 +19,13 @@ describe 'apache::mod::mime', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
 
     general_mime_specs()
 
     it { is_expected.to contain_file("mime.conf").with_path('/etc/apache2/mods-available/mime.conf') }
-
   end
 
   context "on a RedHat OS with default params", :compile do
@@ -39,14 +38,12 @@ describe 'apache::mod::mime', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
 
     general_mime_specs()
 
     it { is_expected.to contain_file("mime.conf").with_path("/etc/httpd/conf.d/mime.conf") }
-
   end
-
 end

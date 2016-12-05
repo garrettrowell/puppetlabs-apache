@@ -2,7 +2,6 @@ require 'spec_helper_acceptance'
 require_relative './version.rb'
 
 describe 'apache ssl' do
-
   describe 'ssl parameters' do
     it 'runs without error' do
       pp = <<-EOS
@@ -90,5 +89,4 @@ describe 'apache ssl' do
       end
     end
   end
-
 end

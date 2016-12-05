@@ -19,21 +19,21 @@ describe provider_class do
     end
 
     it "should return a sorted array of the defined parameters" do
-      expect(@filetype).to receive(:read) { %Q{APACHE2_OPTS="-D FOO -D BAR -D BAZ"\n} }
+      expect(@filetype).to receive(:read) { %{APACHE2_OPTS="-D FOO -D BAR -D BAZ"\n} }
       expect(provider_class).to receive(:filetype) { @filetype }
 
       expect(provider_class.modules).to eq(%w{bar baz foo})
     end
 
     it "should cache the module list" do
-      expect(@filetype).to receive(:read).once { %Q{APACHE2_OPTS="-D FOO -D BAR -D BAZ"\n} }
+      expect(@filetype).to receive(:read).once { %{APACHE2_OPTS="-D FOO -D BAR -D BAZ"\n} }
       expect(provider_class).to receive(:filetype).once { @filetype }
 
       2.times { expect(provider_class.modules).to eq(%w{bar baz foo}) }
     end
 
     it "should normalize parameters" do
-      @filetype.expects(:read).returns(%Q{APACHE2_OPTS="-D FOO -D BAR -D BAR"\n})
+      @filetype.expects(:read).returns(%{APACHE2_OPTS="-D FOO -D BAR -D BAR"\n})
       provider_class.expects(:filetype).returns(@filetype)
 
       expect(provider_class.modules).to eq(%w{bar foo})
@@ -71,8 +71,8 @@ describe provider_class do
     end
 
     it "should add modules whose ensure is present" do
-      expect(@filetype).to receive(:read).at_least(:once) { %Q{APACHE2_OPTS=""} }
-      expect(@filetype).to receive(:write).with(%Q{APACHE2_OPTS="-D INFO"})
+      expect(@filetype).to receive(:read).at_least(:once) { %{APACHE2_OPTS=""} }
+      expect(@filetype).to receive(:write).with(%{APACHE2_OPTS="-D INFO"})
 
       allow(@info).to receive(:should).with(:ensure) { :present }
       provider_class.prefetch("info" => @info)
@@ -81,8 +81,8 @@ describe provider_class do
     end
 
     it "should remove modules whose ensure is present" do
-      expect(@filetype).to receive(:read).at_least(:once) { %Q{APACHE2_OPTS="-D INFO"} }
-      expect(@filetype).to receive(:write).with(%Q{APACHE2_OPTS=""})
+      expect(@filetype).to receive(:read).at_least(:once) { %{APACHE2_OPTS="-D INFO"} }
+      expect(@filetype).to receive(:write).with(%{APACHE2_OPTS=""})
 
       allow(@info).to receive(:should).with(:ensure) { :absent }
       allow(@info).to receive(:provider=)
@@ -92,8 +92,8 @@ describe provider_class do
     end
 
     it "should not modify providers without resources" do
-      expect(@filetype).to receive(:read).at_least(:once) { %Q{APACHE2_OPTS="-D INFO -D MPM"} }
-      expect(@filetype).to receive(:write).with(%Q{APACHE2_OPTS="-D MPM -D SSL"})
+      expect(@filetype).to receive(:read).at_least(:once) { %{APACHE2_OPTS="-D INFO -D MPM"} }
+      expect(@filetype).to receive(:write).with(%{APACHE2_OPTS="-D MPM -D SSL"})
 
       allow(@info).to receive(:should).with(:ensure) { :absent }
       provider_class.prefetch("info" => @info)
@@ -105,8 +105,8 @@ describe provider_class do
     end
 
     it "should write the modules in sorted order" do
-      expect(@filetype).to receive(:read).at_least(:once) { %Q{APACHE2_OPTS=""} }
-      expect(@filetype).to receive(:write).with(%Q{APACHE2_OPTS="-D INFO -D MPM -D SSL"})
+      expect(@filetype).to receive(:read).at_least(:once) { %{APACHE2_OPTS=""} }
+      expect(@filetype).to receive(:write).with(%{APACHE2_OPTS="-D INFO -D MPM -D SSL"})
 
       allow(@mpm).to receive(:should).with(:ensure) { :present }
       provider_class.prefetch("mpm" => @mpm)
@@ -119,8 +119,8 @@ describe provider_class do
     end
 
     it "should write the records back once" do
-      expect(@filetype).to receive(:read).at_least(:once) { %Q{APACHE2_OPTS=""} }
-      expect(@filetype).to receive(:write).once.with(%Q{APACHE2_OPTS="-D INFO -D SSL"})
+      expect(@filetype).to receive(:read).at_least(:once) { %{APACHE2_OPTS=""} }
+      expect(@filetype).to receive(:write).once.with(%{APACHE2_OPTS="-D INFO -D SSL"})
 
       allow(@info).to receive(:should).with(:ensure) { :present }
       provider_class.prefetch("info" => @info)
@@ -132,8 +132,8 @@ describe provider_class do
     end
 
     it "should only modify the line containing APACHE2_OPTS" do
-      expect(@filetype).to receive(:read).at_least(:once) { %Q{# Comment\nAPACHE2_OPTS=""\n# Another comment} }
-      expect(@filetype).to receive(:write).once.with(%Q{# Comment\nAPACHE2_OPTS="-D INFO"\n# Another comment})
+      expect(@filetype).to receive(:read).at_least(:once) { %{# Comment\nAPACHE2_OPTS=""\n# Another comment} }
+      expect(@filetype).to receive(:write).once.with(%{# Comment\nAPACHE2_OPTS="-D INFO"\n# Another comment})
 
       allow(@info).to receive(:should).with(:ensure) { :present }
       provider_class.prefetch("info" => @info)
@@ -141,8 +141,8 @@ describe provider_class do
     end
 
     it "should restore any arbitrary arguments" do
-      expect(@filetype).to receive(:read).at_least(:once) { %Q{APACHE2_OPTS="-Y -D MPM -X"} }
-      expect(@filetype).to receive(:write).once.with(%Q{APACHE2_OPTS="-Y -X -D INFO -D MPM"})
+      expect(@filetype).to receive(:read).at_least(:once) { %{APACHE2_OPTS="-Y -D MPM -X"} }
+      expect(@filetype).to receive(:write).once.with(%{APACHE2_OPTS="-Y -X -D INFO -D MPM"})
 
       allow(@info).to receive(:should).with(:ensure) { :present }
       provider_class.prefetch("info" => @info)
@@ -150,8 +150,8 @@ describe provider_class do
     end
 
     it "should backup the file once if changes were made" do
-      expect(@filetype).to receive(:read).at_least(:once) { %Q{APACHE2_OPTS=""} }
-      expect(@filetype).to receive(:write).once.with(%Q{APACHE2_OPTS="-D INFO -D SSL"})
+      expect(@filetype).to receive(:read).at_least(:once) { %{APACHE2_OPTS=""} }
+      expect(@filetype).to receive(:write).once.with(%{APACHE2_OPTS="-D INFO -D SSL"})
 
       allow(@info).to receive(:should).with(:ensure) { :present }
       provider_class.prefetch("info" => @info)
@@ -165,7 +165,7 @@ describe provider_class do
     end
 
     it "should not write the file or run backups if no changes were made" do
-      expect(@filetype).to receive(:read).at_least(:once) { %Q{APACHE2_OPTS="-X -D INFO -D SSL -Y"} }
+      expect(@filetype).to receive(:read).at_least(:once) { %{APACHE2_OPTS="-X -D INFO -D SSL -Y"} }
       expect(@filetype).to receive(:write).never
 
       allow(@info).to receive(:should).with(:ensure) { :present }

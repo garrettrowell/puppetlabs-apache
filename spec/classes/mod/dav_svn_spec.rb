@@ -16,7 +16,7 @@ describe 'apache::mod::dav_svn', :type => :class do
           :id                        => 'root',
           :kernel                    => 'Linux',
           :path                      => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          :is_pe                     => false,
+          :is_pe                     => false
         }
       end
       it { is_expected.to contain_class("apache::params") }
@@ -34,7 +34,7 @@ describe 'apache::mod::dav_svn', :type => :class do
           :id                        => 'root',
           :kernel                    => 'Linux',
           :path                      => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          :is_pe                     => false,
+          :is_pe                     => false
         }
       end
       it { is_expected.to contain_class("apache::params") }
@@ -52,7 +52,7 @@ describe 'apache::mod::dav_svn', :type => :class do
           :id                        => 'root',
           :kernel                    => 'Linux',
           :path                      => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          :is_pe                     => false,
+          :is_pe                     => false
         }
       end
       it { is_expected.to contain_class("apache::params") }
@@ -69,7 +69,7 @@ describe 'apache::mod::dav_svn', :type => :class do
           :osfamily               => 'Gentoo',
           :operatingsystem        => 'Gentoo',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
-          :is_pe                  => false,
+          :is_pe                  => false
         }
       end
       it { is_expected.to contain_class("apache::params") }

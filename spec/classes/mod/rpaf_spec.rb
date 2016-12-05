@@ -13,15 +13,17 @@ describe 'apache::mod::rpaf', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     it { is_expected.to contain_class("apache::params") }
     it { is_expected.to contain_apache__mod('rpaf') }
     it { is_expected.to contain_package("libapache2-mod-rpaf") }
-    it { is_expected.to contain_file('rpaf.conf').with({
-      'path' => '/etc/apache2/mods-available/rpaf.conf',
-    }) }
+    it do
+      is_expected.to contain_file('rpaf.conf').with(
+        'path' => '/etc/apache2/mods-available/rpaf.conf'
+      )
+    end
     it { is_expected.to contain_file('rpaf.conf').with_content(/^RPAFenable On$/) }
 
     describe "with sethostname => true" do
@@ -53,15 +55,17 @@ describe 'apache::mod::rpaf', :type => :class do
         :id                     => 'root',
         :kernel                 => 'FreeBSD',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     it { is_expected.to contain_class("apache::params") }
     it { is_expected.to contain_apache__mod('rpaf') }
     it { is_expected.to contain_package("www/mod_rpaf2") }
-    it { is_expected.to contain_file('rpaf.conf').with({
-      'path' => '/usr/local/etc/apache24/Modules/rpaf.conf',
-    }) }
+    it do
+      is_expected.to contain_file('rpaf.conf').with(
+        'path' => '/usr/local/etc/apache24/Modules/rpaf.conf'
+      )
+    end
     it { is_expected.to contain_file('rpaf.conf').with_content(/^RPAFenable On$/) }
 
     describe "with sethostname => true" do
@@ -93,15 +97,17 @@ describe 'apache::mod::rpaf', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     it { is_expected.to contain_class("apache::params") }
     it { is_expected.to contain_apache__mod('rpaf') }
     it { is_expected.to contain_package("www-apache/mod_rpaf") }
-    it { is_expected.to contain_file('rpaf.conf').with({
-      'path' => '/etc/apache2/modules.d/rpaf.conf',
-    }) }
+    it do
+      is_expected.to contain_file('rpaf.conf').with(
+        'path' => '/etc/apache2/modules.d/rpaf.conf'
+      )
+    end
     it { is_expected.to contain_file('rpaf.conf').with_content(/^RPAFenable On$/) }
 
     describe "with sethostname => true" do

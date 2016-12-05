@@ -15,7 +15,7 @@ describe 'apache::mod::authnz_ldap', :type => :class do
           :kernel                 => 'Linux',
           :operatingsystem        => 'Debian',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          :is_pe                  => false,
+          :is_pe                  => false
         }
       end
       it { is_expected.to contain_class("apache::params") }
@@ -49,7 +49,7 @@ describe 'apache::mod::authnz_ldap', :type => :class do
           :kernel                 => 'Linux',
           :operatingsystem        => 'RedHat',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          :is_pe                  => false,
+          :is_pe                  => false
         }
       end
       it { is_expected.to contain_class("apache::params") }
@@ -66,7 +66,9 @@ describe 'apache::mod::authnz_ldap', :type => :class do
       end
 
       context 'verify_server_cert = wrong' do
-        let(:params) { { :verify_server_cert => 'wrong' } }
+        let(:params) do
+          { :verify_server_cert => 'wrong' }
+        end
         it 'should raise an error' do
           expect { is_expected.to raise_error Puppet::Error }
         end

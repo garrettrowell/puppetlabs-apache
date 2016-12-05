@@ -573,9 +573,8 @@ describe 'apache::vhost define' do
           expect(r.stdout).to eq("Hello World\n")
         end
       end
-
     end
-  else
+    # else
     # The current stable RHEL release (6.4) comes with Apache httpd 2.2.15
     # That was released March 6, 2010.
     # FallbackResource was backported to 2.2.16, and released July 25, 2010.

@@ -17,35 +17,38 @@ describe 'apache::custom_config', :type => :define do
       :id                     => 'root',
       :kernel                 => 'Linux',
       :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-      :is_pe                  => false,
+      :is_pe                  => false
     }
   end
   context 'defaults with content' do
     let :params do
       {
-        'content' => '# Test',
+        'content' => '# Test'
       }
     end
-    it { is_expected.to contain_exec("syntax verification for rspec").with({
-      'refreshonly' => 'true',
-      'subscribe'   => 'File[apache_rspec]',
-      'command'     => '/usr/sbin/apachectl -t',
-      'notify'      => 'Class[Apache::Service]',
-      'before'      => 'Exec[remove rspec if invalid]',
-    })
-    }
-    it { is_expected.to contain_exec("remove rspec if invalid").with({
-      'unless'      => '/usr/sbin/apachectl -t',
-      'subscribe'   => 'File[apache_rspec]',
-      'refreshonly' => 'true',
-    })
-    }
-    it { is_expected.to contain_file("apache_rspec").with({
-      'ensure'  => 'present',
-      'content' => '# Test',
-      'require' => 'Package[httpd]',
-    })
-    }
+    it do
+      is_expected.to contain_exec("syntax verification for rspec").with(
+        'refreshonly' => 'true',
+        'subscribe'   => 'File[apache_rspec]',
+        'command'     => '/usr/sbin/apachectl -t',
+        'notify'      => 'Class[Apache::Service]',
+        'before'      => 'Exec[remove rspec if invalid]'
+      )
+    end
+    it do
+      is_expected.to contain_exec("remove rspec if invalid").with(
+        'unless'      => '/usr/sbin/apachectl -t',
+        'subscribe'   => 'File[apache_rspec]',
+        'refreshonly' => 'true'
+      )
+    end
+    it do
+      is_expected.to contain_file("apache_rspec").with(
+        'ensure'  => 'present',
+        'content' => '# Test',
+        'require' => 'Package[httpd]'
+      )
+    end
   end
   context 'set everything with source' do
     let :params do
@@ -53,39 +56,43 @@ describe 'apache::custom_config', :type => :define do
         'confdir'        => '/dne',
         'priority'       => '30',
         'source'         => 'puppet:///modules/apache/test',
-        'verify_command' => '/bin/true',
+        'verify_command' => '/bin/true'
       }
     end
-    it { is_expected.to contain_exec("syntax verification for rspec").with({
-      'command'     => '/bin/true',
-    })
-    }
-    it { is_expected.to contain_exec("remove rspec if invalid").with({
-      'command'     => '/bin/rm /dne/30-rspec.conf',
-      'unless'      => '/bin/true',
-    })
-    }
-    it { is_expected.to contain_file("apache_rspec").with({
-      'path'   => '/dne/30-rspec.conf',
-      'ensure'  => 'present',
-      'source' => 'puppet:///modules/apache/test',
-      'require' => 'Package[httpd]',
-    })
-    }
+    it do
+      is_expected.to contain_exec("syntax verification for rspec").with(
+        'command'     => '/bin/true'
+      )
+    end
+    it do
+      is_expected.to contain_exec("remove rspec if invalid").with(
+        'command'     => '/bin/rm /dne/30-rspec.conf',
+        'unless'      => '/bin/true'
+      )
+    end
+    it do
+      is_expected.to contain_file("apache_rspec").with(
+        'path'   => '/dne/30-rspec.conf',
+        'ensure'  => 'present',
+        'source' => 'puppet:///modules/apache/test',
+        'require' => 'Package[httpd]'
+      )
+    end
   end
   context 'verify_config => false' do
     let :params do
       {
         'content'       => '# test',
-        'verify_config' => false,
+        'verify_config' => false
       }
     end
     it { is_expected.to_not contain_exec('syntax verification for rspec') }
     it { is_expected.to_not contain_exec('remove rspec if invalid') }
-    it { is_expected.to contain_file('apache_rspec').with({
-      'notify' => 'Class[Apache::Service]'
-    })
-    }
+    it do
+      is_expected.to contain_file('apache_rspec').with(
+        'notify' => 'Class[Apache::Service]'
+      )
+    end
   end
   context 'ensure => absent' do
     let :params do
@@ -95,43 +102,38 @@ describe 'apache::custom_config', :type => :define do
     end
     it { is_expected.to_not contain_exec('syntax verification for rspec') }
     it { is_expected.to_not contain_exec('remove rspec if invalid') }
-    it { is_expected.to contain_file('apache_rspec').with({
-      'ensure' => 'absent',
-    })
-    }
+    it do
+      is_expected.to contain_file('apache_rspec').with(
+        'ensure' => 'absent'
+      )
+    end
   end
   describe 'validation' do
     context 'both content and source' do
       let :params do
         {
           'content' => 'foo',
-          'source'  => 'bar',
+          'source'  => 'bar'
         }
       end
       it do
-        expect {
-          catalogue
-        }.to raise_error(Puppet::Error, /Only one of \$content and \$source can be specified\./)
+        expect { catalogue }.to raise_error(Puppet::Error, /Only one of \$content and \$source can be specified\./)
       end
     end
     context 'neither content nor source' do
       it do
-        expect {
-          catalogue
-        }.to raise_error(Puppet::Error, /One of \$content and \$source must be specified\./)
+        expect { catalogue }.to raise_error(Puppet::Error, /One of \$content and \$source must be specified\./)
       end
     end
     context 'bad ensure' do
       let :params do
         {
           'content' => 'foo',
-          'ensure'  => 'foo',
+          'ensure'  => 'foo'
         }
       end
       it do
-        expect {
-          catalogue
-        }.to raise_error(Puppet::Error, /is not supported for ensure/)
+        expect { catalogue }.to raise_error(Puppet::Error, /is not supported for ensure/)
       end
     end
   end

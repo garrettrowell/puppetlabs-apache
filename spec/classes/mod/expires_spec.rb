@@ -14,11 +14,15 @@ describe 'apache::mod::expires', :type => :class do
         :operatingsystemrelease => '6',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         :concat_basedir         => '/dne',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     it { is_expected.to contain_apache__mod("expires") }
-    it { is_expected.to contain_file("expires.conf").with(:content => /ExpiresActive On\n/) }
+    it do
+      is_expected.to contain_file("expires.conf").with(
+        :content => /ExpiresActive On\n/
+      )
+    end
   end
   context "with expires default", :compile do
     let :pre_condition do
@@ -33,7 +37,7 @@ describe 'apache::mod::expires', :type => :class do
         :operatingsystemrelease => '7',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         :concat_basedir         => '/dne',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     let :params do
@@ -42,11 +46,12 @@ describe 'apache::mod::expires', :type => :class do
       }
     end
     it { is_expected.to contain_apache__mod("expires") }
-    it { is_expected.to contain_file("expires.conf").with_content(
+    it do
+      is_expected.to contain_file("expires.conf").with_content(
         "ExpiresActive On\n" \
         "ExpiresDefault \"access plus 1 month\"\n"
       )
-    }
+    end
   end
   context "with expires by type", :compile do
     let :pre_condition do
@@ -61,23 +66,24 @@ describe 'apache::mod::expires', :type => :class do
         :operatingsystemrelease => '7',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         :concat_basedir         => '/dne',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     let :params do
       {
         'expires_by_type' => [
           { 'text/json' => 'mod plus 1 day' },
-          { 'text/html' => 'access plus 1 year' },
+          { 'text/html' => 'access plus 1 year' }
         ]
       }
     end
     it { is_expected.to contain_apache__mod("expires") }
-    it { is_expected.to contain_file("expires.conf").with_content(
+    it do
+      is_expected.to contain_file("expires.conf").with_content(
         "ExpiresActive On\n" \
         "ExpiresByType text/json \"mod plus 1 day\"\n" \
         "ExpiresByType text/html \"access plus 1 year\"\n"
       )
-    }
+    end
   end
 end

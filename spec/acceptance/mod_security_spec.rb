@@ -75,7 +75,6 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
         end
       end
     end
-
   end #default mod_security config
 
   context "mod_security should allow disabling by vhost" do
@@ -254,7 +253,6 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
         expect(r.exit_code).to eq(0)
       end
     end
-
   end #mod_security should allow disabling by id
 
   context "mod_security should allow disabling by msg" do
@@ -317,7 +315,6 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
         expect(r.exit_code).to eq(0)
       end
     end
-
   end #mod_security should allow disabling by msg
 
   context "mod_security should allow disabling by tag" do
@@ -380,7 +377,5 @@ describe 'apache::mod::security class', :unless => (fact('osfamily') == 'Debian'
         expect(r.exit_code).to eq(0)
       end
     end
-
   end #mod_security should allow disabling by tag
-
 end #apache::mod::security class

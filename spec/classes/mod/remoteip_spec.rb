@@ -11,7 +11,7 @@ describe 'apache::mod::remoteip', :type => :class do
         :operatingsystem        => 'Debian',
         :id                     => 'root',
         :kernel                 => 'Linux',
-        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+        :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
       }
     end
     let :params do
@@ -19,9 +19,11 @@ describe 'apache::mod::remoteip', :type => :class do
     end
     it { is_expected.to contain_class("apache::params") }
     it { is_expected.to contain_apache__mod('remoteip') }
-    it { is_expected.to contain_file('remoteip.conf').with({
-      'path' => '/etc/apache2/mods-available/remoteip.conf',
-    }) }
+    it do
+      is_expected.to contain_file('remoteip.conf').with(
+        'path' => '/etc/apache2/mods-available/remoteip.conf'
+      )
+    end
 
     describe "with header X-Forwarded-For" do
       let :params do

@@ -2,7 +2,6 @@ require 'spec_helper_acceptance'
 require_relative './version.rb'
 
 describe 'apache parameters' do
-
   # Currently this test only does something on FreeBSD.
   describe 'default_confd_files => false' do
     it 'doesnt do anything' do
@@ -497,5 +496,4 @@ describe 'apache parameters' do
       it { is_expected.to be_installed }
     end
   end
-
 end

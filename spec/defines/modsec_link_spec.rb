@@ -21,13 +21,15 @@ describe 'apache::security::rule_link', :type => :define do
         :id                     => 'root',
         :concat_basedir         => '/',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
-    it { should contain_file('modsecurity_35_bad_robots.data').with(
-      :path => '/etc/httpd/modsecurity.d/activated_rules/modsecurity_35_bad_robots.data',
-      :target => '/usr/lib/modsecurity.d/base_rules/modsecurity_35_bad_robots.data'
-    ) }
+    it do
+      should contain_file('modsecurity_35_bad_robots.data').with(
+        :path => '/etc/httpd/modsecurity.d/activated_rules/modsecurity_35_bad_robots.data',
+        :target => '/usr/lib/modsecurity.d/base_rules/modsecurity_35_bad_robots.data'
+      )
+    end
   end
 
   context "on Debian based systems" do
@@ -41,13 +43,14 @@ describe 'apache::security::rule_link', :type => :define do
         :id                     => 'root',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         :kernel                 => 'Linux',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
-    it { should contain_file('modsecurity_35_bad_robots.data').with(
-      :path => '/etc/modsecurity/activated_rules/modsecurity_35_bad_robots.data',
-      :target => '/usr/share/modsecurity-crs/base_rules/modsecurity_35_bad_robots.data'
-    ) }
+    it do
+      should contain_file('modsecurity_35_bad_robots.data').with(
+        :path => '/etc/modsecurity/activated_rules/modsecurity_35_bad_robots.data',
+        :target => '/usr/share/modsecurity-crs/base_rules/modsecurity_35_bad_robots.data'
+      )
+    end
   end
-
 end

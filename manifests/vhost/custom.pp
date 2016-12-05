@@ -22,7 +22,7 @@ define apache::vhost::custom(
   # converted into something generic.
   if $::apache::vhost_enable_dir {
     $vhost_symlink_ensure = $ensure ? {
-      present => link,
+      'present' => link,
       default => $ensure,
     }
 

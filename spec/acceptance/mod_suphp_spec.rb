@@ -52,6 +52,5 @@ class { 'apache::mod::suphp': }
         expect(r.exit_code).to eq(0)
       end
     end
-
   end
 end

@@ -15,7 +15,7 @@ describe 'apache::mod::auth_kerb', :type => :class do
           :operatingsystemrelease => '6',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
           :concat_basedir         => '/dne',
-          :is_pe                  => false,
+          :is_pe                  => false
         }
       end
       it { is_expected.to contain_class("apache::params") }
@@ -32,7 +32,7 @@ describe 'apache::mod::auth_kerb', :type => :class do
           :operatingsystemrelease => '6',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
           :concat_basedir         => '/dne',
-          :is_pe                  => false,
+          :is_pe                  => false
         }
       end
       it { is_expected.to contain_class("apache::params") }
@@ -49,7 +49,7 @@ describe 'apache::mod::auth_kerb', :type => :class do
           :operatingsystemrelease => '9',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
           :concat_basedir         => '/dne',
-          :is_pe                  => false,
+          :is_pe                  => false
         }
       end
       it { is_expected.to contain_class("apache::params") }
@@ -66,7 +66,7 @@ describe 'apache::mod::auth_kerb', :type => :class do
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
           :operatingsystemrelease => '3.16.1-gentoo',
           :concat_basedir         => '/dne',
-          :is_pe                  => false,
+          :is_pe                  => false
         }
       end
       it { is_expected.to contain_class("apache::params") }

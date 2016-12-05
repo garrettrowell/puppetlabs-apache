@@ -13,18 +13,22 @@ describe 'apache::mod::passenger', :type => :class do
         :operatingsystem        => 'Debian',
         :id                     => 'root',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     it { is_expected.to contain_class("apache::params") }
     it { is_expected.to contain_apache__mod('passenger') }
     it { is_expected.to contain_package("libapache2-mod-passenger") }
-    it { is_expected.to contain_file('zpassenger.load').with({
-      'path' => '/etc/apache2/mods-available/zpassenger.load',
-    }) }
-    it { is_expected.to contain_file('passenger.conf').with({
-      'path' => '/etc/apache2/mods-available/passenger.conf',
-    }) }
+    it do
+      is_expected.to contain_file('zpassenger.load').with(
+        'path' => '/etc/apache2/mods-available/zpassenger.load'
+      )
+    end
+    it do
+      is_expected.to contain_file('passenger.conf').with(
+        'path' => '/etc/apache2/mods-available/passenger.conf'
+      )
+    end
     describe "with passenger_root => '/usr/lib/example'" do
       let :params do
         { :passenger_root => '/usr/lib/example' }
@@ -176,7 +180,7 @@ describe 'apache::mod::passenger', :type => :class do
           :concat_basedir         => '/dne',
           :id                     => 'root',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          :is_pe                  => false,
+          :is_pe                  => false
         }
       end
 
@@ -196,7 +200,7 @@ describe 'apache::mod::passenger', :type => :class do
           :concat_basedir         => '/dne',
           :id                     => 'root',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          :is_pe                  => false,
+          :is_pe                  => false
         }
       end
 
@@ -216,7 +220,7 @@ describe 'apache::mod::passenger', :type => :class do
           :concat_basedir         => '/dne',
           :id                     => 'root',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          :is_pe                  => false,
+          :is_pe                  => false
         }
       end
 
@@ -236,7 +240,7 @@ describe 'apache::mod::passenger', :type => :class do
           :concat_basedir         => '/dne',
           :id                     => 'root',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          :is_pe                  => false,
+          :is_pe                  => false
         }
       end
 
@@ -255,7 +259,7 @@ describe 'apache::mod::passenger', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
 
@@ -265,14 +269,18 @@ describe 'apache::mod::passenger', :type => :class do
       it { is_expected.to contain_class("apache::params") }
       it { is_expected.to contain_apache__mod('passenger') }
       it { is_expected.to contain_package("mod_passenger") }
-      it { is_expected.to contain_file('passenger_package.conf').with({
-        'path' => '/etc/httpd/conf.d/passenger.conf',
-      }) }
+      it do
+        is_expected.to contain_file('passenger_package.conf').with(
+          'path' => '/etc/httpd/conf.d/passenger.conf'
+        )
+      end
       it { is_expected.to contain_file('passenger_package.conf').without_content }
       it { is_expected.to contain_file('passenger_package.conf').without_source }
-      it { is_expected.to contain_file('zpassenger.load').with({
-        'path' => '/etc/httpd/conf.d/zpassenger.load',
-      }) }
+      it do
+        is_expected.to contain_file('zpassenger.load').with(
+          'path' => '/etc/httpd/conf.d/zpassenger.load'
+        )
+      end
       it { is_expected.to contain_file('passenger.conf').without_content(/PassengerRoot/) }
       it { is_expected.to contain_file('passenger.conf').without_content(/PassengerRuby/) }
       describe "with passenger_root => '/usr/lib/example'" do
@@ -292,12 +300,16 @@ describe 'apache::mod::passenger', :type => :class do
     context "on EL7" do
       let(:facts) { rh_facts.merge(:operatingsystemrelease => '7') }
 
-      it { is_expected.to contain_file('passenger_package.conf').with({
-        'path' => '/etc/httpd/conf.d/passenger.conf',
-      }) }
-      it { is_expected.to contain_file('zpassenger.load').with({
-        'path' => '/etc/httpd/conf.modules.d/zpassenger.load',
-      }) }
+      it do
+        is_expected.to contain_file('passenger_package.conf').with(
+          'path' => '/etc/httpd/conf.d/passenger.conf'
+        )
+      end
+      it do
+        is_expected.to contain_file('zpassenger.load').with(
+          'path' => '/etc/httpd/conf.modules.d/zpassenger.load'
+        )
+      end
     end
   end
   context "on a FreeBSD OS" do
@@ -310,7 +322,7 @@ describe 'apache::mod::passenger', :type => :class do
         :id                     => 'root',
         :kernel                 => 'FreeBSD',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     it { is_expected.to contain_class("apache::params") }
@@ -327,7 +339,7 @@ describe 'apache::mod::passenger', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     it { is_expected.to contain_class("apache::params") }

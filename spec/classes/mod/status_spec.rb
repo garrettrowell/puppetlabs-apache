@@ -22,7 +22,7 @@ end
 
 describe 'apache::mod::status', :type => :class do
   it_behaves_like "a mod class, without including apache"
-  
+
   context "default configuration with parameters" do
     context "on a Debian OS with default params" do
       let :facts do
@@ -35,7 +35,7 @@ describe 'apache::mod::status', :type => :class do
           :id                     => 'root',
           :kernel                 => 'Linux',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          :is_pe                  => false,
+          :is_pe                  => false
         }
       end
 
@@ -43,16 +43,19 @@ describe 'apache::mod::status', :type => :class do
 
       status_conf_spec(["127.0.0.1", "::1"], "On", "/server-status")
 
-      it { is_expected.to contain_file("status.conf").with({
-        :ensure => 'file',
-        :path   => '/etc/apache2/mods-available/status.conf',
-      } ) }
+      it do
+        is_expected.to contain_file("status.conf").with(
+          :ensure => 'file',
+          :path   => '/etc/apache2/mods-available/status.conf'
+        )
+      end
 
-      it { is_expected.to contain_file("status.conf symlink").with({
-        :ensure => 'link',
-        :path   => '/etc/apache2/mods-enabled/status.conf',
-      } ) }
-
+      it do
+        is_expected.to contain_file("status.conf symlink").with(
+          :ensure => 'link',
+          :path   => '/etc/apache2/mods-enabled/status.conf'
+        )
+      end
     end
 
     context "on a RedHat OS with default params" do
@@ -65,7 +68,7 @@ describe 'apache::mod::status', :type => :class do
           :id                     => 'root',
           :kernel                 => 'Linux',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          :is_pe                  => false,
+          :is_pe                  => false
         }
       end
 
@@ -74,7 +77,6 @@ describe 'apache::mod::status', :type => :class do
       status_conf_spec(["127.0.0.1", "::1"], "On", "/server-status")
 
       it { is_expected.to contain_file("status.conf").with_path("/etc/httpd/conf.d/status.conf") }
-
     end
 
     context "with custom parameters $allow_from => ['10.10.10.10','11.11.11.11'], $extended_status => 'Off', $status_path => '/custom-status'" do
@@ -88,19 +90,18 @@ describe 'apache::mod::status', :type => :class do
           :id                     => 'root',
           :kernel                 => 'Linux',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          :is_pe                  => false,
+          :is_pe                  => false
         }
       end
       let :params do
         {
           :allow_from => ['10.10.10.10','11.11.11.11'],
           :extended_status => 'Off',
-          :status_path => '/custom-status',
+          :status_path => '/custom-status'
         }
       end
 
       status_conf_spec(["10.10.10.10", "11.11.11.11"], "Off", "/custom-status")
-
     end
 
     context "with valid parameter type $allow_from => ['10.10.10.10']" do
@@ -114,16 +115,14 @@ describe 'apache::mod::status', :type => :class do
           :id                     => 'root',
           :kernel                 => 'Linux',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          :is_pe                  => false,
+          :is_pe                  => false
         }
       end
       let :params do
         { :allow_from => ['10.10.10.10'] }
       end
       it 'should expect to succeed array validation' do
-        expect {
-          is_expected.to contain_file("status.conf")
-        }.not_to raise_error()
+        expect { is_expected.to contain_file("status.conf") }.not_to raise_error()
       end
     end
 
@@ -137,16 +136,14 @@ describe 'apache::mod::status', :type => :class do
           :id                     => 'root',
           :kernel                 => 'Linux',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          :is_pe                  => false,
+          :is_pe                  => false
         }
       end
       let :params do
         { :allow_from => '10.10.10.10' }
       end
       it 'should expect to fail array validation' do
-        expect {
-          is_expected.to contain_file("status.conf")
-        }.to raise_error(Puppet::Error)
+        expect { is_expected.to contain_file("status.conf") }.to raise_error(Puppet::Error)
       end
     end
 
@@ -163,16 +160,14 @@ describe 'apache::mod::status', :type => :class do
             :id                     => 'root',
             :kernel                 => 'Linux',
             :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-            :is_pe                  => false,
+            :is_pe                  => false
           }
         end
         let :params do
           { :extended_status => valid_param }
         end
         it 'should expect to succeed regular expression validation' do
-          expect {
-            is_expected.to contain_file("status.conf")
-          }.not_to raise_error()
+          expect { is_expected.to contain_file("status.conf") }.not_to raise_error()
         end
       end
     end
@@ -188,16 +183,14 @@ describe 'apache::mod::status', :type => :class do
             :id                     => 'root',
             :kernel                 => 'Linux',
             :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-            :is_pe                  => false,
+            :is_pe                  => false
           }
         end
         let :params do
           { :extended_status => invalid_param }
         end
         it 'should expect to fail regular expression validation' do
-          expect {
-            is_expected.to contain_file("status.conf")
-          }.to raise_error(Puppet::Error)
+          expect { is_expected.to contain_file("status.conf") }.to raise_error(Puppet::Error)
         end
       end
     end

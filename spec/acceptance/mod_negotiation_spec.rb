@@ -12,8 +12,10 @@ describe 'apache::mod::negotiation class' do
     end
 
     describe file("#{$mod_dir}/negotiation.conf") do
-      it { should contain "LanguagePriority en ca cs da de el eo es et fr he hr it ja ko ltz nl nn no pl pt pt-BR ru sv zh-CN zh-TW
-ForceLanguagePriority Prefer Fallback" }
+      it do
+        should contain "LanguagePriority en ca cs da de el eo es et fr he hr it ja ko ltz nl nn no pl pt pt-BR ru sv zh-CN zh-TW
+ForceLanguagePriority Prefer Fallback"
+      end
     end
 
     describe service($service_name) do

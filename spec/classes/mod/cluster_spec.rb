@@ -11,18 +11,18 @@ describe 'apache::mod::cluster', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
 
-    let(:params) {
+    let(:params) do
       {
         :allowed_network         => '172.17.0',
         :balancer_name           => 'mycluster',
         :ip                      => '172.17.0.1',
         :version                 => '1.3.0'
       }
-    }
+    end
 
     it { is_expected.to contain_class("apache") }
     it { is_expected.to contain_apache__mod('proxy') }
@@ -45,18 +45,18 @@ describe 'apache::mod::cluster', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
 
-    let(:params) {
+    let(:params) do
       {
         :allowed_network         => '172.17.0',
         :balancer_name           => 'mycluster',
         :ip                      => '172.17.0.1',
         :version                 => '1.3.1'
       }
-    }
+    end
 
     it { is_expected.to contain_class('apache') }
     it { is_expected.to contain_apache__mod('proxy') }
@@ -79,18 +79,18 @@ describe 'apache::mod::cluster', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
 
-    let(:params) {
+    let(:params) do
       {
         :allowed_network         => '172.17.0',
         :balancer_name           => 'mycluster',
         :ip                      => '172.17.0.1',
         :version                 => '1.2.0'
       }
-    }
+    end
 
     it { is_expected.to contain_class('apache') }
     it { is_expected.to contain_apache__mod('proxy') }

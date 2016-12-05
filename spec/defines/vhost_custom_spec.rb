@@ -20,11 +20,15 @@ describe 'apache::vhost::custom', :type => :define do
           :id                     => 'root',
           :kernel                 => 'Linux',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          :is_pe                  => false,
+          :is_pe                  => false
         }
       end
-      let :params do default_params end
-      let :facts do default_facts end
+      let :params do
+        default_params
+      end
+      let :facts do
+        default_facts
+      end
     end
     context "on Debian based systems" do
       let :default_facts do
@@ -37,21 +41,29 @@ describe 'apache::vhost::custom', :type => :define do
           :id                     => 'root',
           :kernel                 => 'Linux',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          :is_pe                  => false,
+          :is_pe                  => false
         }
       end
-      let :params do default_params end
-      let :facts do default_facts end
-      it { is_expected.to contain_file("apache_rspec.example.com").with(
-        :ensure  => 'present',
-        :content => 'foobar',
-        :path    => '/etc/apache2/sites-available/25-rspec.example.com.conf',
-      ) }
-      it { is_expected.to contain_file("25-rspec.example.com.conf symlink").with(
-        :ensure => 'link',
-        :path   => '/etc/apache2/sites-enabled/25-rspec.example.com.conf',
-        :target => '/etc/apache2/sites-available/25-rspec.example.com.conf'
-      ) }
+      let :params do
+        default_params
+      end
+      let :facts do
+        default_facts
+      end
+      it do
+        is_expected.to contain_file("apache_rspec.example.com").with(
+          :ensure  => 'present',
+          :content => 'foobar',
+          :path    => '/etc/apache2/sites-available/25-rspec.example.com.conf'
+        )
+      end
+      it do
+        is_expected.to contain_file("25-rspec.example.com.conf symlink").with(
+          :ensure => 'link',
+          :path   => '/etc/apache2/sites-enabled/25-rspec.example.com.conf',
+          :target => '/etc/apache2/sites-available/25-rspec.example.com.conf'
+        )
+      end
     end
     context "on FreeBSD systems" do
       let :default_facts do
@@ -63,16 +75,22 @@ describe 'apache::vhost::custom', :type => :define do
           :id                     => 'root',
           :kernel                 => 'FreeBSD',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-          :is_pe                  => false,
+          :is_pe                  => false
         }
       end
-      let :params do default_params end
-      let :facts do default_facts end
-      it { is_expected.to contain_file("apache_rspec.example.com").with(
-        :ensure  => 'present',
-        :content => 'foobar',
-        :path    => '/usr/local/etc/apache24/Vhosts/25-rspec.example.com.conf',
-      ) }
+      let :params do
+        default_params
+      end
+      let :facts do
+        default_facts
+      end
+      it do
+        is_expected.to contain_file("apache_rspec.example.com").with(
+          :ensure  => 'present',
+          :content => 'foobar',
+          :path    => '/usr/local/etc/apache24/Vhosts/25-rspec.example.com.conf'
+        )
+      end
     end
     context "on Gentoo systems" do
       let :default_facts do
@@ -84,16 +102,22 @@ describe 'apache::vhost::custom', :type => :define do
           :id                     => 'root',
           :kernel                 => 'Linux',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
-          :is_pe                  => false,
+          :is_pe                  => false
         }
       end
-      let :params do default_params end
-      let :facts do default_facts end
-      it { is_expected.to contain_file("apache_rspec.example.com").with(
-        :ensure  => 'present',
-        :content => 'foobar',
-        :path    => '/etc/apache2/vhosts.d/25-rspec.example.com.conf',
-      ) }
+      let :params do
+        default_params
+      end
+      let :facts do
+        default_facts
+      end
+      it do
+        is_expected.to contain_file("apache_rspec.example.com").with(
+          :ensure  => 'present',
+          :content => 'foobar',
+          :path    => '/etc/apache2/vhosts.d/25-rspec.example.com.conf'
+        )
+      end
     end
   end
 end

@@ -13,63 +13,79 @@ describe 'apache::mod::security', :type => :class do
         :id                     => 'root',
         :concat_basedir         => '/',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
-    it { should contain_apache__mod('security').with(
-      :id => 'security2_module',
-      :lib => 'mod_security2.so'
-    ) }
-    it { should contain_apache__mod('unique_id_module').with(
-      :id => 'unique_id_module',
-      :lib => 'mod_unique_id.so'
-    ) }
+    it do
+      should contain_apache__mod('security').with(
+        :id => 'security2_module',
+        :lib => 'mod_security2.so'
+      )
+    end
+    it do
+      should contain_apache__mod('unique_id_module').with(
+        :id => 'unique_id_module',
+        :lib => 'mod_unique_id.so'
+      )
+    end
     it { should contain_package('mod_security_crs') }
-    it { should contain_file('security.conf').with(
-      :path => '/etc/httpd/conf.modules.d/security.conf'
-    ) }
+    it do
+      should contain_file('security.conf').with(
+        :path => '/etc/httpd/conf.modules.d/security.conf'
+      )
+    end
     it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogRelevantStatus "\^\(\?:5\|4\(\?!04\)\)"$} }
     it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogParts ABIJDEFHZ$} }
-    it { should contain_file('/etc/httpd/modsecurity.d').with(
-      :ensure => 'directory',
-      :path   => '/etc/httpd/modsecurity.d',
-      :owner  => 'root',
-      :group  => 'root',
-      :mode   => '0755',
-    ) }
-    it { should contain_file('/etc/httpd/modsecurity.d/activated_rules').with(
-      :ensure => 'directory',
-      :path => '/etc/httpd/modsecurity.d/activated_rules',
-      :owner => 'apache',
-      :group => 'apache'
-    ) }
-    it { should contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with(
-      :path => '/etc/httpd/modsecurity.d/security_crs.conf'
-    ) }
+    it do
+      should contain_file('/etc/httpd/modsecurity.d').with(
+        :ensure => 'directory',
+        :path   => '/etc/httpd/modsecurity.d',
+        :owner  => 'root',
+        :group  => 'root',
+        :mode   => '0755'
+      )
+    end
+    it do
+      should contain_file('/etc/httpd/modsecurity.d/activated_rules').with(
+        :ensure => 'directory',
+        :path => '/etc/httpd/modsecurity.d/activated_rules',
+        :owner => 'apache',
+        :group => 'apache'
+      )
+    end
+    it do
+      should contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with(
+        :path => '/etc/httpd/modsecurity.d/security_crs.conf'
+      )
+    end
     it { should contain_apache__security__rule_link('base_rules/modsecurity_35_bad_robots.data') }
-    it { should contain_file('modsecurity_35_bad_robots.data').with(
-      :path   => '/etc/httpd/modsecurity.d/activated_rules/modsecurity_35_bad_robots.data',
-      :target => '/usr/lib/modsecurity.d/base_rules/modsecurity_35_bad_robots.data',
-    ) }
+    it do
+      should contain_file('modsecurity_35_bad_robots.data').with(
+        :path   => '/etc/httpd/modsecurity.d/activated_rules/modsecurity_35_bad_robots.data',
+        :target => '/usr/lib/modsecurity.d/base_rules/modsecurity_35_bad_robots.data'
+      )
+    end
 
     describe 'with parameters' do
       let :params do
         {
           :activated_rules           => [
-            '/tmp/foo/bar.conf',
+            '/tmp/foo/bar.conf'
           ],
           :audit_log_relevant_status => "^(?:5|4(?!01|04))",
           :audit_log_parts           => "ABCDZ",
-          :secdefaultaction          => "deny,status:406,nolog,auditlog",
+          :secdefaultaction          => "deny,status:406,nolog,auditlog"
         }
       end
       it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogRelevantStatus "\^\(\?:5\|4\(\?!01\|04\)\)"$} }
       it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogParts ABCDZ$} }
       it { should contain_file('/etc/httpd/modsecurity.d/security_crs.conf').with_content %r{^\s*SecDefaultAction "phase:2,deny,status:406,nolog,auditlog"$} }
-      it { should contain_file('bar.conf').with(
-        :path   => '/etc/httpd/modsecurity.d/activated_rules/bar.conf',
-        :target => '/tmp/foo/bar.conf',
-      ) }
+      it do
+        should contain_file('bar.conf').with(
+          :path   => '/etc/httpd/modsecurity.d/activated_rules/bar.conf',
+          :target => '/tmp/foo/bar.conf'
+        )
+      end
     end
   end
 
@@ -84,64 +100,79 @@ describe 'apache::mod::security', :type => :class do
         :id                     => 'root',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         :kernel                 => 'Linux',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
-    it { should contain_apache__mod('security').with(
-      :id => 'security2_module',
-      :lib => 'mod_security2.so'
-    ) }
-    it { should contain_apache__mod('unique_id_module').with(
-      :id => 'unique_id_module',
-      :lib => 'mod_unique_id.so'
-    ) }
+    it do
+      should contain_apache__mod('security').with(
+        :id => 'security2_module',
+        :lib => 'mod_security2.so'
+      )
+    end
+    it do
+      should contain_apache__mod('unique_id_module').with(
+        :id => 'unique_id_module',
+        :lib => 'mod_unique_id.so'
+      )
+    end
     it { should contain_package('modsecurity-crs') }
-    it { should contain_file('security.conf').with(
-      :path => '/etc/apache2/mods-available/security.conf'
-    ) }
+    it do
+      should contain_file('security.conf').with(
+        :path => '/etc/apache2/mods-available/security.conf'
+      )
+    end
     it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogRelevantStatus "\^\(\?:5\|4\(\?!04\)\)"$} }
     it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogParts ABIJDEFHZ$} }
-    it { should contain_file('/etc/modsecurity').with(
-      :ensure => 'directory',
-      :path   => '/etc/modsecurity',
-      :owner  => 'root',
-      :group  => 'root',
-      :mode   => '0755',
-    ) }
-    it { should contain_file('/etc/modsecurity/activated_rules').with(
-      :ensure => 'directory',
-      :path => '/etc/modsecurity/activated_rules',
-      :owner => 'www-data',
-      :group => 'www-data'
-    ) }
-    it { should contain_file('/etc/modsecurity/security_crs.conf').with(
-      :path => '/etc/modsecurity/security_crs.conf'
-    ) }
+    it do
+      should contain_file('/etc/modsecurity').with(
+        :ensure => 'directory',
+        :path   => '/etc/modsecurity',
+        :owner  => 'root',
+        :group  => 'root',
+        :mode   => '0755'
+      )
+    end
+    it do
+      should contain_file('/etc/modsecurity/activated_rules').with(
+        :ensure => 'directory',
+        :path => '/etc/modsecurity/activated_rules',
+        :owner => 'www-data',
+        :group => 'www-data'
+      )
+    end
+    it do
+      should contain_file('/etc/modsecurity/security_crs.conf').with(
+        :path => '/etc/modsecurity/security_crs.conf'
+      )
+    end
     it { should contain_apache__security__rule_link('base_rules/modsecurity_35_bad_robots.data') }
-    it { should contain_file('modsecurity_35_bad_robots.data').with(
-      :path   => '/etc/modsecurity/activated_rules/modsecurity_35_bad_robots.data',
-      :target => '/usr/share/modsecurity-crs/base_rules/modsecurity_35_bad_robots.data',
-    ) }
+    it do
+      should contain_file('modsecurity_35_bad_robots.data').with(
+        :path   => '/etc/modsecurity/activated_rules/modsecurity_35_bad_robots.data',
+        :target => '/usr/share/modsecurity-crs/base_rules/modsecurity_35_bad_robots.data'
+      )
+    end
 
     describe 'with parameters' do
       let :params do
         {
           :activated_rules           => [
-            '/tmp/foo/bar.conf',
+            '/tmp/foo/bar.conf'
           ],
           :audit_log_relevant_status => "^(?:5|4(?!01|04))",
           :audit_log_parts           => "ABCDZ",
-          :secdefaultaction          => "deny,status:406,nolog,auditlog",
+          :secdefaultaction          => "deny,status:406,nolog,auditlog"
         }
       end
       it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogRelevantStatus "\^\(\?:5\|4\(\?!01\|04\)\)"$} }
       it { should contain_file('security.conf').with_content %r{^\s+SecAuditLogParts ABCDZ$} }
       it { should contain_file('/etc/modsecurity/security_crs.conf').with_content %r{^\s*SecDefaultAction "phase:2,deny,status:406,nolog,auditlog"$} }
-      it { should contain_file('bar.conf').with(
-        :path   => '/etc/modsecurity/activated_rules/bar.conf',
-        :target => '/tmp/foo/bar.conf',
-      ) }
+      it do
+        should contain_file('bar.conf').with(
+          :path   => '/etc/modsecurity/activated_rules/bar.conf',
+          :target => '/tmp/foo/bar.conf'
+        )
+      end
     end
   end
-
 end

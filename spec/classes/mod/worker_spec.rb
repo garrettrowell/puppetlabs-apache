@@ -15,7 +15,7 @@ describe 'apache::mod::worker', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     it { is_expected.to contain_class("apache::params") }
@@ -26,7 +26,7 @@ describe 'apache::mod::worker', :type => :class do
     context "with Apache version < 2.4" do
       let :params do
         {
-          :apache_version => '2.2',
+          :apache_version => '2.2'
         }
       end
 
@@ -39,15 +39,16 @@ describe 'apache::mod::worker', :type => :class do
     context "with Apache version >= 2.4" do
       let :params do
         {
-          :apache_version => '2.4',
+          :apache_version => '2.4'
         }
       end
 
-      it { is_expected.to contain_file("/etc/apache2/mods-available/worker.load").with({
-        'ensure'  => 'file',
-        'content' => "LoadModule mpm_worker_module /usr/lib/apache2/modules/mod_mpm_worker.so\n"
-        })
-      }
+      it do
+        is_expected.to contain_file("/etc/apache2/mods-available/worker.load").with(
+          'ensure'  => 'file',
+          'content' => "LoadModule mpm_worker_module /usr/lib/apache2/modules/mod_mpm_worker.so\n"
+        )
+      end
       it { is_expected.to contain_file("/etc/apache2/mods-enabled/worker.load").with_ensure('link') }
     end
   end
@@ -61,7 +62,7 @@ describe 'apache::mod::worker', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     it { is_expected.to contain_class("apache::params") }
@@ -71,30 +72,32 @@ describe 'apache::mod::worker', :type => :class do
     context "with Apache version < 2.4" do
       let :params do
         {
-          :apache_version => '2.2',
+          :apache_version => '2.2'
         }
       end
 
-      it { is_expected.to contain_file_line("/etc/sysconfig/httpd worker enable").with({
-        'require' => 'Package[httpd]',
-        })
-      }
+      it do
+        is_expected.to contain_file_line("/etc/sysconfig/httpd worker enable").with(
+          'require' => 'Package[httpd]'
+        )
+      end
     end
 
     context "with Apache version >= 2.4" do
       let :params do
         {
-          :apache_version => '2.4',
+          :apache_version => '2.4'
         }
       end
 
       it { is_expected.not_to contain_apache__mod('event') }
 
-      it { is_expected.to contain_file("/etc/httpd/conf.d/worker.load").with({
-        'ensure'  => 'file',
-        'content' => "LoadModule mpm_worker_module modules/mod_mpm_worker.so\n",
-        })
-      }
+      it do
+        is_expected.to contain_file("/etc/httpd/conf.d/worker.load").with(
+          'ensure'  => 'file',
+          'content' => "LoadModule mpm_worker_module modules/mod_mpm_worker.so\n"
+        )
+      end
     end
   end
   context "on a FreeBSD OS" do
@@ -107,7 +110,7 @@ describe 'apache::mod::worker', :type => :class do
         :id                     => 'root',
         :kernel                 => 'FreeBSD',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     it { is_expected.to contain_class("apache::params") }
@@ -124,7 +127,7 @@ describe 'apache::mod::worker', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     it { is_expected.to contain_class("apache::params") }
@@ -143,21 +146,61 @@ describe 'apache::mod::worker', :type => :class do
         :id                     => 'root',
         :concat_basedir         => '/dne',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
 
     context 'defaults' do
-      it { should contain_file('/etc/httpd/conf.d/worker.conf').with(:content => /^<IfModule mpm_worker_module>$/) }
-      it { should contain_file('/etc/httpd/conf.d/worker.conf').with(:content => /^\s+ServerLimit\s+25$/) }
-      it { should contain_file('/etc/httpd/conf.d/worker.conf').with(:content => /^\s+StartServers\s+2$/) }
-      it { should contain_file('/etc/httpd/conf.d/worker.conf').with(:content => /^\s+MaxClients\s+150$/) }
-      it { should contain_file('/etc/httpd/conf.d/worker.conf').with(:content => /^\s+MinSpareThreads\s+25$/) }
-      it { should contain_file('/etc/httpd/conf.d/worker.conf').with(:content => /^\s+MaxSpareThreads\s+75$/) }
-      it { should contain_file('/etc/httpd/conf.d/worker.conf').with(:content => /^\s+ThreadsPerChild\s+25$/) }
-      it { should contain_file('/etc/httpd/conf.d/worker.conf').with(:content => /^\s+MaxRequestsPerChild\s+0$/) }
-      it { should contain_file('/etc/httpd/conf.d/worker.conf').with(:content => /^\s+ThreadLimit\s+64$/) }
-      it { should contain_file("/etc/httpd/conf.d/worker.conf").with(:content => /^\s*ListenBacklog\s*511/) }
+      it do
+        should contain_file('/etc/httpd/conf.d/worker.conf').with(
+          :content => /^<IfModule mpm_worker_module>$/
+        )
+      end
+      it do
+        should contain_file('/etc/httpd/conf.d/worker.conf').with(
+          :content => /^\s+ServerLimit\s+25$/
+        )
+      end
+      it do
+        should contain_file('/etc/httpd/conf.d/worker.conf').with(
+          :content => /^\s+StartServers\s+2$/
+        )
+      end
+      it do
+        should contain_file('/etc/httpd/conf.d/worker.conf').with(
+          :content => /^\s+MaxClients\s+150$/
+        )
+      end
+      it do
+        should contain_file('/etc/httpd/conf.d/worker.conf').with(
+          :content => /^\s+MinSpareThreads\s+25$/
+        )
+      end
+      it do
+        should contain_file('/etc/httpd/conf.d/worker.conf').with(
+          :content => /^\s+MaxSpareThreads\s+75$/
+        )
+      end
+      it do
+        should contain_file('/etc/httpd/conf.d/worker.conf').with(
+          :content => /^\s+ThreadsPerChild\s+25$/
+        )
+      end
+      it do
+        should contain_file('/etc/httpd/conf.d/worker.conf').with(
+          :content => /^\s+MaxRequestsPerChild\s+0$/
+        )
+      end
+      it do
+        should contain_file('/etc/httpd/conf.d/worker.conf').with(
+          :content => /^\s+ThreadLimit\s+64$/
+        )
+      end
+      it do
+        should contain_file("/etc/httpd/conf.d/worker.conf").with(
+          :content => /^\s*ListenBacklog\s*511/
+        )
+      end
     end
 
     context 'setting params' do
@@ -171,19 +214,59 @@ describe 'apache::mod::worker', :type => :class do
           :threadsperchild      => 15,
           :maxrequestsperchild  => 16,
           :threadlimit          => 17,
-          :listenbacklog        => 8,
+          :listenbacklog        => 8
         }
       end
-      it { should contain_file('/etc/httpd/conf.d/worker.conf').with(:content => /^<IfModule mpm_worker_module>$/) }
-      it { should contain_file('/etc/httpd/conf.d/worker.conf').with(:content => /^\s+ServerLimit\s+10$/) }
-      it { should contain_file('/etc/httpd/conf.d/worker.conf').with(:content => /^\s+StartServers\s+11$/) }
-      it { should contain_file('/etc/httpd/conf.d/worker.conf').with(:content => /^\s+MaxClients\s+12$/) }
-      it { should contain_file('/etc/httpd/conf.d/worker.conf').with(:content => /^\s+MinSpareThreads\s+13$/) }
-      it { should contain_file('/etc/httpd/conf.d/worker.conf').with(:content => /^\s+MaxSpareThreads\s+14$/) }
-      it { should contain_file('/etc/httpd/conf.d/worker.conf').with(:content => /^\s+ThreadsPerChild\s+15$/) }
-      it { should contain_file('/etc/httpd/conf.d/worker.conf').with(:content => /^\s+MaxRequestsPerChild\s+16$/) }
-      it { should contain_file('/etc/httpd/conf.d/worker.conf').with(:content => /^\s+ThreadLimit\s+17$/) }
-      it { should contain_file("/etc/httpd/conf.d/worker.conf").with(:content => /^\s*ListenBacklog\s*8/) }
+      it do
+        should contain_file('/etc/httpd/conf.d/worker.conf').with(
+          :content => /^<IfModule mpm_worker_module>$/
+        )
+      end
+      it do
+        should contain_file('/etc/httpd/conf.d/worker.conf').with(
+          :content => /^\s+ServerLimit\s+10$/
+        )
+      end
+      it do
+        should contain_file('/etc/httpd/conf.d/worker.conf').with(
+          :content => /^\s+StartServers\s+11$/
+        )
+      end
+      it do
+        should contain_file('/etc/httpd/conf.d/worker.conf').with(
+          :content => /^\s+MaxClients\s+12$/
+        )
+      end
+      it do
+        should contain_file('/etc/httpd/conf.d/worker.conf').with(
+          :content => /^\s+MinSpareThreads\s+13$/
+        )
+      end
+      it do
+        should contain_file('/etc/httpd/conf.d/worker.conf').with(
+          :content => /^\s+MaxSpareThreads\s+14$/
+        )
+      end
+      it do
+        should contain_file('/etc/httpd/conf.d/worker.conf').with(
+          :content => /^\s+ThreadsPerChild\s+15$/
+        )
+      end
+      it do
+        should contain_file('/etc/httpd/conf.d/worker.conf').with(
+          :content => /^\s+MaxRequestsPerChild\s+16$/
+        )
+      end
+      it do
+        should contain_file('/etc/httpd/conf.d/worker.conf').with(
+          :content => /^\s+ThreadLimit\s+17$/
+        )
+      end
+      it do
+        should contain_file("/etc/httpd/conf.d/worker.conf").with(
+          :content => /^\s*ListenBacklog\s*8/
+        )
+      end
     end
   end
 end

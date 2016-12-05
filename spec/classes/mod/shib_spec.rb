@@ -14,7 +14,7 @@ describe 'apache::mod::shib', :type => :class do
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         :fqdn                   => 'test.example.com',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     describe 'with no parameters' do
@@ -32,7 +32,7 @@ describe 'apache::mod::shib', :type => :class do
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         :fqdn                   => 'test.example.com',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     describe 'with no parameters' do

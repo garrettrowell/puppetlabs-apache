@@ -456,7 +456,7 @@ define apache::vhost(
     }
   }
   if $add_listen {
-    if $ip and defined(Apache::Listen["${port}"]) {
+    if $ip and defined_with_params(Apache::Listen[$port]) {
       fail("Apache::Vhost[${name}]: Mixing IP and non-IP Listen directives is not possible; check the add_listen parameter of the apache::vhost define to disable this")
     }
     if $listen_addr_port and $ensure == 'present' {
@@ -613,7 +613,7 @@ define apache::vhost(
   if $::apache::vhost_enable_dir {
     $vhost_enable_dir = $::apache::vhost_enable_dir
     $vhost_symlink_ensure = $ensure ? {
-      present => link,
+      'present' => link,
       default => $ensure,
     }
     file{ "${priority_real}${filename}.conf symlink":
@@ -1086,7 +1086,7 @@ define apache::vhost(
     concat::fragment { "${name}-security":
       target  => "${priority_real}${filename}.conf",
       order   => 320,
-      content => template('apache/vhost/_security.erb')
+      content => template('apache/vhost/_security.erb'),
     }
   }
 

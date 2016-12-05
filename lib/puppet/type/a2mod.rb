@@ -8,7 +8,6 @@ Puppet::Type.newtype(:a2mod) do
        desc "The name of the module to be managed"
 
        isnamevar
-
     end
 
     newparam(:lib) do
@@ -16,7 +15,7 @@ Puppet::Type.newtype(:a2mod) do
 
       defaultto { "mod_#{@resource[:name]}.so" }
     end
- 
+
     newparam(:identifier) do
       desc "Module identifier string used by LoadModule. Default: module-name_module"
 
@@ -26,5 +25,4 @@ Puppet::Type.newtype(:a2mod) do
     end
 
     autorequire(:package) { catalog.resource(:package, 'httpd')}
-
 end

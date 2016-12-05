@@ -12,7 +12,7 @@ describe 'apache::mod::php', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     context "with mpm_module => prefork" do
@@ -23,9 +23,11 @@ describe 'apache::mod::php', :type => :class do
       it { is_expected.to contain_class("apache::mod::prefork") }
       it { is_expected.to contain_apache__mod('php5') }
       it { is_expected.to contain_package("libapache2-mod-php5") }
-      it { is_expected.to contain_file("php5.load").with(
-        :content => "LoadModule php5_module /usr/lib/apache2/modules/libphp5.so\n"
-      ) }
+      it do
+        is_expected.to contain_file("php5.load").with(
+          :content => "LoadModule php5_module /usr/lib/apache2/modules/libphp5.so\n"
+        )
+      end
     end
     context "with mpm_module => itk" do
       let :pre_condition do
@@ -35,35 +37,49 @@ describe 'apache::mod::php', :type => :class do
       it { is_expected.to contain_class("apache::mod::itk") }
       it { is_expected.to contain_apache__mod('php5') }
       it { is_expected.to contain_package("libapache2-mod-php5") }
-      it { is_expected.to contain_file("php5.load").with(
-        :content => "LoadModule php5_module /usr/lib/apache2/modules/libphp5.so\n"
-      ) }
+      it do
+        is_expected.to contain_file("php5.load").with(
+          :content => "LoadModule php5_module /usr/lib/apache2/modules/libphp5.so\n"
+        )
+      end
     end
     context "on jessie" do
       let :pre_condition do
         'class { "apache": mpm_module => prefork, }'
       end
-      let(:facts) { super().merge({
-        :operatingsystemrelease => '8',
-        :lsbdistcodename        => 'jessie',
-      }) }
-      it { is_expected.to contain_file("php5.load").with(
-        :content => "LoadModule php5_module /usr/lib/apache2/modules/libphp5.so\n"
-      ) }
+      let(:facts) do
+        super().merge(
+          {
+            :operatingsystemrelease => '8',
+            :lsbdistcodename        => 'jessie'
+          }
+        )
+      end
+      it do
+        is_expected.to contain_file("php5.load").with(
+          :content => "LoadModule php5_module /usr/lib/apache2/modules/libphp5.so\n"
+        )
+      end
     end
     context "on stretch" do
       let :pre_condition do
         'class { "apache": mpm_module => prefork, }'
       end
-      let(:facts) { super().merge({
-        :operatingsystemrelease => '9',
-        :lsbdistcodename        => 'stretch',
-      }) }
+      let(:facts) do
+        super().merge(
+          {
+            :operatingsystemrelease => '9',
+            :lsbdistcodename        => 'stretch'
+          }
+        )
+      end
       it { is_expected.to contain_apache__mod('php7.0') }
       it { is_expected.to contain_package("libapache2-mod-php7.0") }
-      it { is_expected.to contain_file("php7.0.load").with(
-        :content => "LoadModule php7_module /usr/lib/apache2/modules/libphp7.0.so\n"
-      ) }
+      it do
+        is_expected.to contain_file("php7.0.load").with(
+          :content => "LoadModule php7_module /usr/lib/apache2/modules/libphp7.0.so\n"
+        )
+      end
     end
   end
   describe "on a RedHat OS" do
@@ -76,7 +92,7 @@ describe 'apache::mod::php', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     context "with default params" do
@@ -86,11 +102,14 @@ describe 'apache::mod::php', :type => :class do
       it { is_expected.to contain_class("apache::params") }
       it { is_expected.to contain_apache__mod('php5') }
       it { is_expected.to contain_package("php") }
-      it { is_expected.to contain_file("php5.load").with(
-        :content => "LoadModule php5_module modules/libphp5.so\n"
-      ) }
+      it do
+        is_expected.to contain_file("php5.load").with(
+          :content => "LoadModule php5_module modules/libphp5.so\n"
+        )
+      end
     end
-    context "with alternative package name" do let :pre_condition do
+    context "with alternative package name" do
+      let :pre_condition do
         'class { "apache": }'
       end
       let :params do
@@ -98,17 +117,21 @@ describe 'apache::mod::php', :type => :class do
       end
       it { is_expected.to contain_package("php54") }
     end
-    context "with alternative path" do let :pre_condition do
+    context "with alternative path" do
+      let :pre_condition do
         'class { "apache": }'
       end
       let :params do
         { :path => 'alternative-path'}
       end
-      it { is_expected.to contain_file("php5.load").with(
-        :content => "LoadModule php5_module alternative-path\n"
-      ) }
+      it do
+        is_expected.to contain_file("php5.load").with(
+          :content => "LoadModule php5_module alternative-path\n"
+        )
+      end
     end
-    context "with alternative extensions" do let :pre_condition do
+    context "with alternative extensions" do
+      let :pre_condition do
         'class { "apache": }'
       end
       let :params do
@@ -123,9 +146,11 @@ describe 'apache::mod::php', :type => :class do
       let :params do
         { :package_ensure => '5.3.13'}
       end
-      it { is_expected.to contain_package("php").with(
-        :ensure => '5.3.13'
-      ) }
+      it do
+        is_expected.to contain_package("php").with(
+          :ensure => '5.3.13'
+        )
+      end
     end
     context "with mpm_module => prefork" do
       let :pre_condition do
@@ -135,9 +160,11 @@ describe 'apache::mod::php', :type => :class do
       it { is_expected.to contain_class("apache::mod::prefork") }
       it { is_expected.to contain_apache__mod('php5') }
       it { is_expected.to contain_package("php") }
-      it { is_expected.to contain_file("php5.load").with(
-        :content => "LoadModule php5_module modules/libphp5.so\n"
-      ) }
+      it do
+        is_expected.to contain_file("php5.load").with(
+          :content => "LoadModule php5_module modules/libphp5.so\n"
+        )
+      end
     end
     context "with mpm_module => itk" do
       let :pre_condition do
@@ -147,9 +174,11 @@ describe 'apache::mod::php', :type => :class do
       it { is_expected.to contain_class("apache::mod::itk") }
       it { is_expected.to contain_apache__mod('php5') }
       it { is_expected.to contain_package("php") }
-      it { is_expected.to contain_file("php5.load").with(
-        :content => "LoadModule php5_module modules/libphp5.so\n"
-      ) }
+      it do
+        is_expected.to contain_file("php5.load").with(
+          :content => "LoadModule php5_module modules/libphp5.so\n"
+        )
+      end
     end
   end
   describe "on a FreeBSD OS" do
@@ -162,7 +191,7 @@ describe 'apache::mod::php', :type => :class do
         :id                     => 'root',
         :kernel                 => 'FreeBSD',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     context "with mpm_module => prefork" do
@@ -195,7 +224,7 @@ describe 'apache::mod::php', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     context "with mpm_module => prefork" do
@@ -229,7 +258,7 @@ describe 'apache::mod::php', :type => :class do
         :concat_basedir         => '/dne',
         :id                     => 'root',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     context 'with content param' do
@@ -239,9 +268,11 @@ describe 'apache::mod::php', :type => :class do
       let :params do
         { :content => 'somecontent' }
       end
-      it { should contain_file('php5.conf').with(
-        :content => 'somecontent'
-      ) }
+      it do
+        should contain_file('php5.conf').with(
+          :content => 'somecontent'
+        )
+      end
     end
     context 'with template param' do
       let :pre_condition do
@@ -250,9 +281,11 @@ describe 'apache::mod::php', :type => :class do
       let :params do
         { :template => 'apache/mod/php.conf.erb' }
       end
-      it { should contain_file('php5.conf').with(
-        :content => /^# PHP is an HTML-embedded scripting language which attempts to make it/
-      ) }
+      it do
+        should contain_file('php5.conf').with(
+          :content => /^# PHP is an HTML-embedded scripting language which attempts to make it/
+        )
+      end
     end
     context 'with source param' do
       let :pre_condition do
@@ -261,9 +294,11 @@ describe 'apache::mod::php', :type => :class do
       let :params do
         { :source => 'some-path' }
       end
-      it { should contain_file('php5.conf').with(
-        :source => 'some-path'
-      ) }
+      it do
+        should contain_file('php5.conf').with(
+          :source => 'some-path'
+        )
+      end
     end
     context 'content has priority over template' do
       let :pre_condition do
@@ -275,9 +310,11 @@ describe 'apache::mod::php', :type => :class do
           :content  => 'somecontent'
         }
       end
-      it { should contain_file('php5.conf').with(
-        :content => 'somecontent'
-      ) }
+      it do
+        should contain_file('php5.conf').with(
+          :content => 'somecontent'
+        )
+      end
     end
     context 'source has priority over template' do
       let :pre_condition do
@@ -289,9 +326,11 @@ describe 'apache::mod::php', :type => :class do
           :source   => 'some-path'
         }
       end
-      it { should contain_file('php5.conf').with(
-        :source => 'some-path'
-      ) }
+      it do
+        should contain_file('php5.conf').with(
+          :source => 'some-path'
+        )
+      end
     end
     context 'source has priority over content' do
       let :pre_condition do
@@ -303,9 +342,11 @@ describe 'apache::mod::php', :type => :class do
           :source  => 'some-path'
         }
       end
-      it { should contain_file('php5.conf').with(
-        :source => 'some-path'
-      ) }
+      it do
+        should contain_file('php5.conf').with(
+          :source => 'some-path'
+        )
+      end
     end
     context 'with mpm_module => worker' do
       let :pre_condition do

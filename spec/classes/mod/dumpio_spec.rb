@@ -19,7 +19,7 @@ describe 'apache::mod::dumpio', :type => :class do
         :id                        => 'root',
         :kernel                    => 'Linux',
         :path                      => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                     => false
       }
     end
     context "default configuration fore parameters" do
@@ -32,7 +32,7 @@ describe 'apache::mod::dumpio', :type => :class do
     context "with dumpio_input set to On" do
       let :params do
         {
-          :dump_io_input => 'On',
+          :dump_io_input => 'On'
         }
       end
       it { should contain_file("dumpio.conf").with_content(/^\s*DumpIOInput\s+"On"$/)}
@@ -41,7 +41,7 @@ describe 'apache::mod::dumpio', :type => :class do
     context "with dumpio_ouput set to On" do
       let :params do
         {
-          :dump_io_output => 'On',
+          :dump_io_output => 'On'
         }
       end
       it { should contain_file("dumpio.conf").with_content(/^\s*DumpIOInput\s+"Off"$/)}

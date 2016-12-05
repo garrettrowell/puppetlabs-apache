@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'apache::mod::proxy_connect', :type => :class do
   let :pre_condition do
     [
-      'include apache::mod::proxy',
+      'include apache::mod::proxy'
     ]
   end
   it_behaves_like "a mod class, without including apache"
@@ -16,19 +16,19 @@ describe 'apache::mod::proxy_connect', :type => :class do
         :id              => 'root',
         :kernel          => 'Linux',
         :path            => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe           => false
       }
     end
     context 'with Apache version < 2.2' do
       let :facts do
         super().merge({
           :operatingsystemrelease => '7.0',
-          :lsbdistcodename        => 'wheezy',
+          :lsbdistcodename        => 'wheezy'
         })
       end
       let :params do
         {
-          :apache_version => '2.1',
+          :apache_version => '2.1'
         }
       end
       it { is_expected.not_to contain_apache__mod('proxy_connect') }
@@ -37,12 +37,12 @@ describe 'apache::mod::proxy_connect', :type => :class do
       let :facts do
         super().merge({
           :operatingsystemrelease => '7.0',
-          :lsbdistcodename        => 'wheezy',
+          :lsbdistcodename        => 'wheezy'
         })
       end
       let :params do
         {
-          :apache_version => '2.2',
+          :apache_version => '2.2'
         }
       end
       it { is_expected.to contain_apache__mod('proxy_connect') }
@@ -51,12 +51,12 @@ describe 'apache::mod::proxy_connect', :type => :class do
       let :facts do
         super().merge({
           :operatingsystemrelease => '8.0',
-          :lsbdistcodename        => 'jessie',
+          :lsbdistcodename        => 'jessie'
         })
       end
       let :params do
         {
-          :apache_version => '2.4',
+          :apache_version => '2.4'
         }
       end
       it { is_expected.to contain_apache__mod('proxy_connect') }

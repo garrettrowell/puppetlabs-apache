@@ -12,7 +12,7 @@ describe 'apache::mod::ssl', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     it { expect { catalogue }.to raise_error(Puppet::Error, /Unsupported osfamily:/) }
@@ -28,7 +28,7 @@ describe 'apache::mod::ssl', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     it { is_expected.to contain_class('apache::params') }
@@ -56,7 +56,7 @@ describe 'apache::mod::ssl', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     it { is_expected.to contain_class('apache::params') }
@@ -74,7 +74,7 @@ describe 'apache::mod::ssl', :type => :class do
         :id                     => 'root',
         :kernel                 => 'FreeBSD',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     it { is_expected.to contain_class('apache::params') }
@@ -91,7 +91,7 @@ describe 'apache::mod::ssl', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     it { is_expected.to contain_class('apache::params') }
@@ -108,7 +108,7 @@ describe 'apache::mod::ssl', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     it { is_expected.to contain_class('apache::params') }
@@ -125,7 +125,7 @@ describe 'apache::mod::ssl', :type => :class do
         :id                     => 'root',
         :concat_basedir         => '/dne',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
 
@@ -136,7 +136,7 @@ describe 'apache::mod::ssl', :type => :class do
     context "with Apache version < 2.4" do
       let :params do
         {
-          :apache_version => '2.2',
+          :apache_version => '2.2'
         }
       end
       context 'ssl_compression with default value' do
@@ -146,7 +146,7 @@ describe 'apache::mod::ssl', :type => :class do
       context 'setting ssl_compression to true' do
         let :params do
           {
-            :ssl_compression => true,
+            :ssl_compression => true
           }
         end
         it { is_expected.not_to contain_file('ssl.conf').with_content(/^  SSLCompression On$/)}
@@ -155,7 +155,7 @@ describe 'apache::mod::ssl', :type => :class do
     context "with Apache version >= 2.4" do
       let :params do
         {
-          :apache_version => '2.4',
+          :apache_version => '2.4'
         }
       end
       context 'ssl_compression with default value' do
@@ -166,7 +166,7 @@ describe 'apache::mod::ssl', :type => :class do
         let :params do
           {
             :apache_version => '2.4',
-            :ssl_compression => true,
+            :ssl_compression => true
           }
         end
         it { is_expected.to contain_file('ssl.conf').with_content(/^  SSLCompression On$/)}
@@ -176,7 +176,7 @@ describe 'apache::mod::ssl', :type => :class do
     context 'setting ssl_pass_phrase_dialog' do
       let :params do
         {
-          :ssl_pass_phrase_dialog => 'exec:/path/to/program',
+          :ssl_pass_phrase_dialog => 'exec:/path/to/program'
         }
       end
       it { is_expected.to contain_file('ssl.conf').with_content(/^  SSLPassPhraseDialog exec:\/path\/to\/program$/)}
@@ -185,7 +185,7 @@ describe 'apache::mod::ssl', :type => :class do
     context 'setting ssl_random_seed_bytes' do
       let :params do
         {
-          :ssl_random_seed_bytes => '1024',
+          :ssl_random_seed_bytes => '1024'
         }
       end
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLRandomSeed startup file:/dev/urandom 1024$})}
@@ -194,7 +194,7 @@ describe 'apache::mod::ssl', :type => :class do
     context 'setting ssl_openssl_conf_cmd' do
       let :params do
         {
-          :ssl_openssl_conf_cmd => 'DHParameters "foo.pem"',
+          :ssl_openssl_conf_cmd => 'DHParameters "foo.pem"'
         }
       end
       it { is_expected.to contain_file('ssl.conf').with_content(/^\s+SSLOpenSSLConfCmd DHParameters "foo.pem"$/)}
@@ -203,7 +203,7 @@ describe 'apache::mod::ssl', :type => :class do
     context 'setting ssl_mutex' do
       let :params do
         {
-          :ssl_mutex => 'posixsem',
+          :ssl_mutex => 'posixsem'
         }
       end
       it { is_expected.to contain_file('ssl.conf').with_content(%r{^  SSLMutex posixsem$})}

@@ -10,7 +10,7 @@ when 'RedHat'
   $vhost_dir        = '/etc/httpd/conf.d'
   $vhost            = '/etc/httpd/conf.d/15-default.conf'
   $run_dir          = '/var/run/httpd'
-  $doc_root          = '/var/www'
+  $doc_root         = '/var/www'
   $service_name     = 'httpd'
   $package_name     = 'httpd'
   $error_log        = 'error_log'
@@ -32,20 +32,21 @@ when 'Debian'
   $vhost            = '/etc/apache2/sites-available/15-default.conf'
   $vhost_dir        = '/etc/apache2/sites-enabled'
   $run_dir          = '/var/run/apache2'
-  $doc_root          = '/var/www'
+  $doc_root         = '/var/www'
   $service_name     = 'apache2'
   $package_name     = 'apache2'
   $error_log        = 'error.log'
   $suphp_handler    = 'x-httpd-php'
   $suphp_configpath = '/etc/php5/apache2'
 
-  if _operatingsystem == 'Ubuntu' and _operatingsystemrelease >= 13.10
-    $apache_version = '2.4'
-  elsif _operatingsystem == 'Debian' and _operatingsystemrelease >= 8.0
-    $apache_version = '2.4'
-  else
-    $apache_version = '2.2'
-  end
+  $apache_version = if _operatingsystem == 'Ubuntu' and _operatingsystemrelease >= 13.10
+                      '2.4'
+                    elsif _operatingsystem == 'Debian' and _operatingsystemrelease >= 8.0
+                      '2.4'
+                    else
+                      '2.2'
+                    end
+
 when 'FreeBSD'
   $confd_dir        = '/usr/local/etc/apache24/Includes'
   $mod_dir          = '/usr/local/etc/apache24/Modules'
@@ -54,7 +55,7 @@ when 'FreeBSD'
   $vhost            = '/usr/local/etc/apache24/Vhosts/15-default.conf'
   $vhost_dir        = '/usr/local/etc/apache24/Vhosts'
   $run_dir          = '/var/run/apache24'
-  $doc_root          = '/var/www'
+  $doc_root         = '/var/www'
   $service_name     = 'apache24'
   $package_name     = 'apache24'
   $error_log        = 'http-error.log'
@@ -68,7 +69,7 @@ when 'Gentoo'
   $vhost            = '/etc/apache2/vhosts.d/15-default.conf'
   $vhost_dir        = '/etc/apache2/vhosts.d'
   $run_dir          = '/var/run/apache2'
-  $doc_root          = '/var/www'
+  $doc_root         = '/var/www'
   $service_name     = 'apache2'
   $package_name     = 'www-servers/apache'
   $error_log        = 'http-error.log'
@@ -86,11 +87,12 @@ when 'Suse'
   $service_name     = 'apache2'
   $package_name     = 'apache2'
   $error_log        = 'error.log'
-  if _operatingsystemrelease < 12
-    $apache_version   = '2.2'
-  else
-    $apache_version   = '2.4'
-  end
+
+  $apache_version = if _operatingsystemrelease < 12
+                      '2.2'
+                    else
+                      '2.4'
+                    end
 else
   $apache_version = '0'
 end

@@ -14,7 +14,7 @@ describe 'apache::mod::ext_filter', :type => :class do
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         :fqdn                   => 'test.example.com',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     describe 'with no parameters' do
@@ -23,14 +23,16 @@ describe 'apache::mod::ext_filter', :type => :class do
     end
     describe 'with parameters' do
       let :params do
-        { :ext_filter_define =>  {'filtA' => 'input=A output=B',
-                                  'filtB' => 'input=C cmd="C"' },
+        {
+          :ext_filter_define =>  {
+            'filtA' => 'input=A output=B',
+            'filtB' => 'input=C cmd="C"'
+          }
         }
       end
       it { is_expected.to contain_file('ext_filter.conf').with_content(/^ExtFilterDefine\s+filtA\s+input=A output=B$/) }
       it { is_expected.to contain_file('ext_filter.conf').with_content(/^ExtFilterDefine\s+filtB\s+input=C cmd="C"$/) }
     end
-
   end
   context "on a RedHat OS" do
     let :facts do
@@ -43,7 +45,7 @@ describe 'apache::mod::ext_filter', :type => :class do
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         :fqdn                   => 'test.example.com',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     describe 'with no parameters' do
@@ -52,8 +54,11 @@ describe 'apache::mod::ext_filter', :type => :class do
     end
     describe 'with parameters' do
       let :params do
-        { :ext_filter_define =>  {'filtA' => 'input=A output=B',
-                                  'filtB' => 'input=C cmd="C"' },
+        {
+          :ext_filter_define =>  {
+            'filtA' => 'input=A output=B',
+            'filtB' => 'input=C cmd="C"'
+          }
         }
       end
       it { is_expected.to contain_file('ext_filter.conf').with_path('/etc/httpd/conf.d/ext_filter.conf') }

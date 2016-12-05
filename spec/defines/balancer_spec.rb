@@ -14,7 +14,7 @@ describe 'apache::balancer', :type => :define do
       :concat_basedir         => '/dne',
       :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       :kernel                 => 'Linux',
-      :is_pe                  => false,
+      :is_pe                  => false
     }
   end
   describe 'apache pre_condition with defaults' do
@@ -27,30 +27,38 @@ describe 'apache::balancer', :type => :define do
           :target => '/tmp/myapp.conf'
         }
       end
-      it { should contain_concat('apache_balancer_myapp').with({
-        :path => "/tmp/myapp.conf",
-      })}
+      it do
+        should contain_concat('apache_balancer_myapp').with(
+          :path => "/tmp/myapp.conf"
+        )
+      end
       it { should_not contain_apache__mod('slotmem_shm') }
       it { should_not contain_apache__mod('lbmethod_byrequests') }
     end
     context "on jessie" do
-      let(:facts) { super().merge({
-        :operatingsystemrelease => '8',
-        :lsbdistcodename        => 'jessie',
-      }) }
+      let(:facts) do
+        super().merge(
+          {
+            :operatingsystemrelease => '8',
+            :lsbdistcodename        => 'jessie'
+          }
+        )
+      end
       it { should contain_apache__mod('slotmem_shm') }
       it { should contain_apache__mod('lbmethod_byrequests') }
     end
   end
-  describe 'apache pre_condition with conf_dir set' do 
+  describe 'apache pre_condition with conf_dir set' do
     let :pre_condition do
       'class{"apache":
           confd_dir => "/junk/path"
        }'
     end
-    it { should contain_concat('apache_balancer_myapp').with({
-      :path => "/junk/path/balancer_myapp.conf",
-    })}
+    it do
+      should contain_concat('apache_balancer_myapp').with(
+        :path => "/junk/path/balancer_myapp.conf"
+      )
+    end
   end
 
   describe 'with lbmethod and with apache::mod::proxy_balancer::apache_version set' do
@@ -62,8 +70,8 @@ describe 'apache::balancer', :type => :define do
     let :params do
       {
         :proxy_set => {
-          'lbmethod' => 'bytraffic',
-        },
+          'lbmethod' => 'bytraffic'
+        }
       }
     end
     it { should contain_apache__mod('slotmem_shm') }

@@ -262,7 +262,7 @@ class apache::params inherits ::apache::version {
       $shib2_lib = 'mod_shib2.so'
     }
     $mod_libs             = {
-      'shib2' => $shib2_lib
+      'shib2' => $shib2_lib,
     }
     $conf_template          = 'apache/httpd.conf.erb'
     $keepalive              = 'Off'
@@ -500,14 +500,14 @@ class apache::params inherits ::apache::version {
     $suphp_engine        = 'off'
     $suphp_configpath    = '/etc/php5/apache2'
     $php_version         = '5'
-    if $::operatingsystemrelease < '11' or $::operatingsystemrelease >= '12' {
+    if versioncmp($::operatingsystemrelease, '11') < 0 or versioncmp($::operatingsystemrelease,'12') >= 0 {
       $mod_packages      = {
         'auth_kerb'   => 'apache2-mod_auth_kerb',
         'perl'        => 'apache2-mod_perl',
         'php5'        => 'apache2-mod_php5',
         'python'      => 'apache2-mod_python',
         'security'    => 'apache2-mod_security2',
-        'worker'      => 'apache2-worker'
+        'worker'      => 'apache2-worker',
         }
     } else {
       $mod_packages        = {

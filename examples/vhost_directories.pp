@@ -1,10 +1,10 @@
 # Base class. Declares default vhost on port 80 and default ssl
 # vhost on port 443 listening on all interfaces and serving
 # $apache::docroot
-class { 'apache': }
+class { '::apache': }
 
 # Example from README adapted.
-apache::vhost { 'readme.example.net':
+::apache::vhost { 'readme.example.net':
   docroot     => '/var/www/readme',
   directories => [
     {
@@ -19,7 +19,7 @@ apache::vhost { 'readme.example.net':
 }
 
 # location test
-apache::vhost { 'location.example.net':
+::apache::vhost { 'location.example.net':
   docroot     => '/var/www/location',
   directories => [
     {
@@ -31,7 +31,7 @@ apache::vhost { 'location.example.net':
 }
 
 # files test, curedly disable access to accidental backup files.
-apache::vhost { 'files.example.net':
+::apache::vhost { 'files.example.net':
   docroot     => '/var/www/files',
   directories => [
     {

@@ -16,7 +16,7 @@ describe 'apache::mod::auth_mellon', :type => :class do
           :kernel                 => 'Linux',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
           :fqdn                   => 'test.example.com',
-          :is_pe                  => false,
+          :is_pe                  => false
         }
       end
       describe 'with no parameters' do
@@ -27,7 +27,8 @@ describe 'apache::mod::auth_mellon', :type => :class do
       end
       describe 'with parameters' do
         let :params do
-          { :mellon_cache_size => '200',
+          {
+            :mellon_cache_size => '200',
             :mellon_cache_entry_size => '2010',
             :mellon_lock_file => '/tmp/junk',
             :mellon_post_directory => '/tmp/post',
@@ -44,7 +45,6 @@ describe 'apache::mod::auth_mellon', :type => :class do
         it { should contain_file('auth_mellon.conf').with_content(/^MellonPostSize\s+8$/) }
         it { should contain_file('auth_mellon.conf').with_content(/^MellonPostCount\s+10$/) }
       end
-
     end
     context "on a RedHat OS" do
       let :facts do
@@ -57,7 +57,7 @@ describe 'apache::mod::auth_mellon', :type => :class do
           :kernel                 => 'Linux',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
           :fqdn                   => 'test.example.com',
-          :is_pe                  => false,
+          :is_pe                  => false
         }
       end
       describe 'with no parameters' do
@@ -68,7 +68,8 @@ describe 'apache::mod::auth_mellon', :type => :class do
       end
       describe 'with parameters' do
         let :params do
-          { :mellon_cache_size => '200',
+          {
+            :mellon_cache_size => '200',
             :mellon_cache_entry_size => '2010',
             :mellon_lock_file => '/tmp/junk',
             :mellon_post_directory => '/tmp/post',

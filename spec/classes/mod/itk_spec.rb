@@ -15,7 +15,7 @@ describe 'apache::mod::itk', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     it { is_expected.to contain_class("apache::params") }
@@ -26,7 +26,7 @@ describe 'apache::mod::itk', :type => :class do
     context "with Apache version < 2.4" do
       let :params do
         {
-          :apache_version => '2.2',
+          :apache_version => '2.2'
         }
       end
 
@@ -43,15 +43,16 @@ describe 'apache::mod::itk', :type => :class do
 
       let :params do
         {
-          :apache_version => '2.4',
+          :apache_version => '2.4'
         }
       end
 
-      it { is_expected.to contain_file("/etc/apache2/mods-available/itk.load").with({
-        'ensure'  => 'file',
-        'content' => "LoadModule mpm_itk_module /usr/lib/apache2/modules/mod_mpm_itk.so\n"
-        })
-      }
+      it do
+        is_expected.to contain_file("/etc/apache2/mods-available/itk.load").with(
+          'ensure'  => 'file',
+          'content' => "LoadModule mpm_itk_module /usr/lib/apache2/modules/mod_mpm_itk.so\n"
+        )
+      end
       it { is_expected.to contain_file("/etc/apache2/mods-enabled/itk.load").with_ensure('link') }
     end
   end
@@ -65,7 +66,7 @@ describe 'apache::mod::itk', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     it { is_expected.to contain_class("apache::params") }
@@ -76,14 +77,15 @@ describe 'apache::mod::itk', :type => :class do
     context "with Apache version < 2.4" do
       let :params do
         {
-          :apache_version => '2.2',
+          :apache_version => '2.2'
         }
       end
 
-      it { is_expected.to contain_file_line("/etc/sysconfig/httpd itk enable").with({
-        'require' => 'Package[httpd]',
-        })
-      }
+      it do
+        is_expected.to contain_file_line("/etc/sysconfig/httpd itk enable").with(
+          'require' => 'Package[httpd]'
+        )
+      end
     end
 
     context "with Apache version >= 2.4" do
@@ -93,15 +95,16 @@ describe 'apache::mod::itk', :type => :class do
 
       let :params do
         {
-          :apache_version => '2.4',
+          :apache_version => '2.4'
         }
       end
 
-      it { is_expected.to contain_file("/etc/httpd/conf.d/itk.load").with({
-        'ensure'  => 'file',
-        'content' => "LoadModule mpm_itk_module modules/mod_mpm_itk.so\n"
-        })
-      }
+      it do
+        is_expected.to contain_file("/etc/httpd/conf.d/itk.load").with(
+          'ensure'  => 'file',
+          'content' => "LoadModule mpm_itk_module modules/mod_mpm_itk.so\n"
+        )
+      end
     end
   end
   context "on a FreeBSD OS" do
@@ -119,7 +122,7 @@ describe 'apache::mod::itk', :type => :class do
         :kernel                 => 'FreeBSD',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
         :is_pe                  => false,
-        :mpm_module             => 'itk',
+        :mpm_module             => 'itk'
       }
     end
     it { is_expected.to contain_class("apache::params") }

@@ -16,9 +16,9 @@ describe 'apache class' do
         @result = apply_manifest(version_check_pp, :catch_failures => true)
       end
 
-      it {
+      it do
         expect(@result.output).to match(/apache_version = >#{$apache_version}.*</)
-      }
+      end
     end
 
     describe package($package_name) do

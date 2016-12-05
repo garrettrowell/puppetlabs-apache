@@ -14,7 +14,7 @@ describe 'apache::mod::ldap', :type => :class do
         :kernel                 => 'Linux',
         :operatingsystem        => 'Debian',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     it { is_expected.to contain_class("apache::params") }
@@ -31,15 +31,17 @@ describe 'apache::mod::ldap', :type => :class do
     end
 
     context 'set multiple ldap params' do
-      let(:params) {{
-        :ldap_trusted_global_cert_file => 'ca.pem',
-        :ldap_trusted_global_cert_type => 'CA_DER',
-        :ldap_shared_cache_size        => '500000',
-        :ldap_cache_entries            => '1024',
-        :ldap_cache_ttl                => '600',
-        :ldap_opcache_entries          => '1024',
-        :ldap_opcache_ttl              => '600'
-      }}
+      let(:params) do
+        {
+          :ldap_trusted_global_cert_file => 'ca.pem',
+          :ldap_trusted_global_cert_type => 'CA_DER',
+          :ldap_shared_cache_size        => '500000',
+          :ldap_cache_entries            => '1024',
+          :ldap_cache_ttl                => '600',
+          :ldap_opcache_entries          => '1024',
+          :ldap_opcache_ttl              => '600'
+        }
+      end
       it { is_expected.to contain_file('ldap.conf').with_content(/^LDAPTrustedGlobalCert CA_DER ca\.pem$/) }
       it { is_expected.to contain_file('ldap.conf').with_content(/^LDAPSharedCacheSize 500000$/) }
       it { is_expected.to contain_file('ldap.conf').with_content(/^LDAPCacheEntries 1024$/) }
@@ -59,7 +61,7 @@ describe 'apache::mod::ldap', :type => :class do
         :kernel                 => 'Linux',
         :operatingsystem        => 'RedHat',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     it { is_expected.to contain_class("apache::params") }
@@ -71,15 +73,19 @@ describe 'apache::mod::ldap', :type => :class do
     end
 
     context 'ldap_trusted_global_cert_file param' do
-      let(:params) { { :ldap_trusted_global_cert_file => 'ca.pem' } }
+      let(:params) do
+        { :ldap_trusted_global_cert_file => 'ca.pem' }
+      end
       it { is_expected.to contain_file('ldap.conf').with_content(/^LDAPTrustedGlobalCert CA_BASE64 ca\.pem$/) }
     end
 
     context 'ldap_trusted_global_cert_file and ldap_trusted_global_cert_type params' do
-      let(:params) {{
-        :ldap_trusted_global_cert_file => 'ca.pem',
-        :ldap_trusted_global_cert_type => 'CA_DER'
-      }}
+      let(:params) do
+        {
+          :ldap_trusted_global_cert_file => 'ca.pem',
+          :ldap_trusted_global_cert_type => 'CA_DER'
+        }
+      end
       it { is_expected.to contain_file('ldap.conf').with_content(/^LDAPTrustedGlobalCert CA_DER ca\.pem$/) }
     end
   end # Redhat

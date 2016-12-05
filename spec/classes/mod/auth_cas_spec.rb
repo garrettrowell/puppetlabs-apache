@@ -17,7 +17,7 @@ describe 'apache::mod::auth_cas', :type => :class do
     let :params do
       {
         :cas_login_url    => 'https://cas.example.com/login',
-        :cas_validate_url => 'https://cas.example.com/validate',
+        :cas_validate_url => 'https://cas.example.com/validate'
       }
     end
 
@@ -32,7 +32,7 @@ describe 'apache::mod::auth_cas', :type => :class do
           :operatingsystemrelease => '6',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
           :concat_basedir         => '/dne',
-          :is_pe                  => false,
+          :is_pe                  => false
         }
       end
       it { is_expected.to contain_class("apache::params") }
@@ -51,7 +51,7 @@ describe 'apache::mod::auth_cas', :type => :class do
           :operatingsystemrelease => '6',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
           :concat_basedir         => '/dne',
-          :is_pe                  => false,
+          :is_pe                  => false
         }
       end
       it { is_expected.to contain_class("apache::params") }

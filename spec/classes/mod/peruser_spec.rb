@@ -14,13 +14,11 @@ describe 'apache::mod::peruser', :type => :class do
         :id                     => 'root',
         :kernel                 => 'FreeBSD',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     it do
-      expect {
-        catalogue
-      }.to raise_error(Puppet::Error, /Unsupported osfamily FreeBSD/)
+      expect { catalogue }.to raise_error(Puppet::Error, /Unsupported osfamily FreeBSD/)
     end
   end
   context "on a Gentoo OS" do
@@ -33,7 +31,7 @@ describe 'apache::mod::peruser', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
     it { is_expected.to contain_class("apache::params") }

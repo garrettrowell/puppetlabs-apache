@@ -4,7 +4,7 @@ describe 'apache::mod::authn_dbd', :type => :class do
   context "default params" do
     let :params do
       {
-        :authn_dbd_params => 'host=db_host port=3306 user=apache password=###### dbname=apache_auth',
+        :authn_dbd_params => 'host=db_host port=3306 user=apache password=###### dbname=apache_auth'
       }
     end
 
@@ -31,7 +31,7 @@ describe 'apache::mod::authn_dbd', :type => :class do
           :operatingsystemrelease => '6',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
           :concat_basedir         => '/dne',
-          :is_pe                  => false,
+          :is_pe                  => false
         }
       end
       it { is_expected.to contain_class("apache::params") }
@@ -50,7 +50,7 @@ describe 'apache::mod::authn_dbd', :type => :class do
           :operatingsystemrelease => '6',
           :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
           :concat_basedir         => '/dne',
-          :is_pe                  => false,
+          :is_pe                  => false
         }
       end
       it { is_expected.to contain_class("apache::params") }

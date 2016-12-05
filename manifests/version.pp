@@ -36,7 +36,7 @@ class apache::version {
       $default = '2.4'
     }
     'Suse': {
-      if $::operatingsystem == 'SLES' and $::operatingsystemrelease >= '12' {
+      if $::operatingsystem == 'SLES' and versioncmp($::operatingsystemrelease, '12') >= 0 {
         $default = '2.4'
       } else {
         $default = '2.2'

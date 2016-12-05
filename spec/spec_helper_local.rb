@@ -32,7 +32,7 @@ shared_examples 'a mod class, without including apache' do
       :path                      => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       :concat_basedir            => '/dne',
       :is_pe                     => false,
-      :hardwaremodel             => 'x86_64',
+      :hardwaremodel             => 'x86_64'
     }
   end
   it { should compile.with_all_deps }

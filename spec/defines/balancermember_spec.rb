@@ -14,7 +14,7 @@ describe 'apache::balancermember', :type => :define do
       :concat_basedir         => '/dne',
       :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
       :kernel                 => 'Linux',
-      :is_pe                  => false,
+      :is_pe                  => false
     }
   end
   describe "allows multiple balancermembers with the same url" do
@@ -54,8 +54,10 @@ describe 'apache::balancermember', :type => :define do
         :balancer_cluster => 'balancername'
       }
     end
-    it { should contain_concat__fragment('BalancerMember http://127.0.0.1:8080/').with({
-      :target => "apache_balancer_balancername",
-    })}
+    it do
+      should contain_concat__fragment('BalancerMember http://127.0.0.1:8080/').with(
+        :target => "apache_balancer_balancername"
+      )
+    end
   end
 end

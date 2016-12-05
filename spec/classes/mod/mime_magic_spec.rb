@@ -19,7 +19,7 @@ describe 'apache::mod::mime_magic', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
 
@@ -31,14 +31,18 @@ describe 'apache::mod::mime_magic', :type => :class do
       )
     end
 
-    it { is_expected.to contain_file("mime_magic.conf").with({
-      :ensure => 'file',
-      :path   => '/etc/apache2/mods-available/mime_magic.conf',
-    } ) }
-    it { is_expected.to contain_file("mime_magic.conf symlink").with({
-      :ensure => 'link',
-      :path   => '/etc/apache2/mods-enabled/mime_magic.conf',
-    } ) }
+    it do
+      is_expected.to contain_file("mime_magic.conf").with(
+        :ensure => 'file',
+        :path   => '/etc/apache2/mods-available/mime_magic.conf'
+      )
+    end
+    it do
+      is_expected.to contain_file("mime_magic.conf symlink").with(
+        :ensure => 'link',
+        :path   => '/etc/apache2/mods-enabled/mime_magic.conf'
+      )
+    end
 
     context "with magic_file => /tmp/Debian_magic" do
       let :params do
@@ -51,7 +55,6 @@ describe 'apache::mod::mime_magic', :type => :class do
         )
       end
     end
-
   end
 
   context "on a RedHat OS with default params" do
@@ -64,7 +67,7 @@ describe 'apache::mod::mime_magic', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
 
@@ -77,7 +80,6 @@ describe 'apache::mod::mime_magic', :type => :class do
     end
 
     it { is_expected.to contain_file("mime_magic.conf").with_path("/etc/httpd/conf.d/mime_magic.conf") }
-
   end
 
   context "with magic_file => /tmp/magic" do
@@ -91,7 +93,7 @@ describe 'apache::mod::mime_magic', :type => :class do
         :id                     => 'root',
         :kernel                 => 'Linux',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
 
@@ -105,6 +107,4 @@ describe 'apache::mod::mime_magic', :type => :class do
       )
     end
   end
-
-
 end

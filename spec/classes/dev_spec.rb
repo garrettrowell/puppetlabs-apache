@@ -1,9 +1,8 @@
 require 'spec_helper'
 
 describe 'apache::dev', :type => :class do
-  let(:pre_condition) {[
-    'include apache'
-  ]}
+  let(:pre_condition) { 'include apache' }
+
   context "on a Debian OS" do
     let :facts do
       {

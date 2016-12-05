@@ -31,7 +31,7 @@ class apache::mod::security (
     fail('FreeBSD is not currently supported')
   }
 
-  if ($::osfamily == 'Suse' and $::operatingsystemrelease < '11') {
+  if ($::osfamily == 'Suse' and versioncmp($::operatingsystemrelease,'11') < 0) {
     fail('SLES 10 is not currently supported.')
   }
 

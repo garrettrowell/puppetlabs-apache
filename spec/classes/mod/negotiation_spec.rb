@@ -13,19 +13,17 @@ describe 'apache::mod::negotiation', :type => :class do
         :concat_basedir         => '/dne',
         :id                     => 'root',
         :path                   => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                  => false,
+        :is_pe                  => false
       }
     end
 
     context "default params" do
       it { should contain_class("apache") }
       it do
-        should contain_file('negotiation.conf').with( {
+        should contain_file('negotiation.conf').with(
           :ensure  => 'file',
-          :content => 'LanguagePriority en ca cs da de el eo es et fr he hr it ja ko ltz nl nn no pl pt pt-BR ru sv zh-CN zh-TW
-ForceLanguagePriority Prefer Fallback
-',
-        } )
+          :content => /LanguagePriority en ca cs da de el eo es et fr he hr it ja ko ltz nl nn no pl pt pt-BR ru sv zh-CN zh-TW\sForceLanguagePriority Prefer Fallback/
+        )
       end
     end
 
@@ -36,7 +34,7 @@ ForceLanguagePriority Prefer Fallback
       it do
         should contain_file('negotiation.conf').with( {
           :ensure  => 'file',
-          :content => /^ForceLanguagePriority Prefer$/,
+          :content => /^ForceLanguagePriority Prefer$/
         } )
       end
     end
@@ -48,7 +46,7 @@ ForceLanguagePriority Prefer Fallback
       it do
         should contain_file('negotiation.conf').with( {
           :ensure  => 'file',
-          :content => /^LanguagePriority en es$/,
+          :content => /^LanguagePriority en es$/
         } )
       end
     end

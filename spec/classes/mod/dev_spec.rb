@@ -1,16 +1,18 @@
 require 'spec_helper'
 
 describe 'apache::mod::dev', :type => :class do
-  let(:pre_condition) {[
-    'include apache'
-  ]}
+  let(:pre_condition) do
+    [
+      'include apache'
+    ]
+  end
 
   it_behaves_like "a mod class, without including apache"
 
   [
     ['RedHat',  '6', 'Santiago', 'Linux'],
     ['Debian',  '6', 'squeeze', 'Linux'],
-    ['FreeBSD', '9', 'FreeBSD', 'FreeBSD'],
+    ['FreeBSD', '9', 'FreeBSD', 'FreeBSD']
   ].each do |osfamily, operatingsystemrelease, lsbdistcodename, kernel|
     context "on a #{osfamily} OS" do
       let :facts do

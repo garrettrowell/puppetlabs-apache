@@ -15,13 +15,15 @@ describe 'apache::mod::fcgid', :type => :class do
         :id                        => 'root',
         :kernel                    => 'Linux',
         :path                      => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                     => false,
+        :is_pe                     => false
       }
     end
     it { is_expected.to contain_class("apache::params") }
-    it { is_expected.to contain_apache__mod('fcgid').with({
-      'loadfile_name' => nil
-    }) }
+    it do
+      is_expected.to contain_apache__mod('fcgid').with(
+        'loadfile_name' => nil
+      )
+    end
     it { is_expected.to contain_package("libapache2-mod-fcgid") }
   end
 
@@ -36,27 +38,31 @@ describe 'apache::mod::fcgid', :type => :class do
         :id                        => 'root',
         :kernel                    => 'Linux',
         :path                      => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                     => false,
+        :is_pe                     => false
       }
     end
 
     describe 'without parameters' do
       it { is_expected.to contain_class("apache::params") }
-      it { is_expected.to contain_apache__mod('fcgid').with({
-        'loadfile_name' => nil
-      }) }
+      it do
+        is_expected.to contain_apache__mod('fcgid').with(
+          'loadfile_name' => nil
+        )
+      end
       it { is_expected.to contain_package("mod_fcgid") }
     end
 
     describe 'with parameters' do
-      let :params do {
-        :options                     => {
-          'FcgidIPCDir'               => '/var/run/fcgidsock',
-          'SharememPath'              => '/var/run/fcgid_shm',
-          'FcgidMinProcessesPerClass' => '0',
-          'AddHandler'                => 'fcgid-script .fcgi',
+      let :params do
+        {
+          :options                     => {
+            'FcgidIPCDir'               => '/var/run/fcgidsock',
+            'SharememPath'              => '/var/run/fcgid_shm',
+            'FcgidMinProcessesPerClass' => '0',
+            'AddHandler'                => 'fcgid-script .fcgi'
+          }
         }
-      } end
+      end
 
       it 'should contain the correct config' do
         content = catalogue.resource('file', 'fcgid.conf').send(:parameters)[:content]
@@ -66,7 +72,7 @@ describe 'apache::mod::fcgid', :type => :class do
           '  FcgidIPCDir /var/run/fcgidsock',
           '  FcgidMinProcessesPerClass 0',
           '  SharememPath /var/run/fcgid_shm',
-          '</IfModule>',
+          '</IfModule>'
         ])
       end
     end
@@ -83,15 +89,17 @@ describe 'apache::mod::fcgid', :type => :class do
         :id                        => 'root',
         :kernel                    => 'Linux',
         :path                      => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                     => false,
+        :is_pe                     => false
       }
     end
 
     describe 'without parameters' do
       it { is_expected.to contain_class("apache::params") }
-      it { is_expected.to contain_apache__mod('fcgid').with({
-        'loadfile_name' => 'unixd_fcgid.load'
-      }) }
+      it do
+        is_expected.to contain_apache__mod('fcgid').with(
+          'loadfile_name' => 'unixd_fcgid.load'
+        )
+      end
       it { is_expected.to contain_package("mod_fcgid") }
     end
   end
@@ -107,14 +115,16 @@ describe 'apache::mod::fcgid', :type => :class do
         :id                        => 'root',
         :kernel                    => 'FreeBSD',
         :path                      => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
-        :is_pe                     => false,
+        :is_pe                     => false
       }
     end
 
     it { is_expected.to contain_class("apache::params") }
-    it { is_expected.to contain_apache__mod('fcgid').with({
-      'loadfile_name' => 'unixd_fcgid.load'
-    }) }
+    it do
+      is_expected.to contain_apache__mod('fcgid').with(
+        'loadfile_name' => 'unixd_fcgid.load'
+      )
+    end
     it { is_expected.to contain_package("www/mod_fcgid") }
   end
 
@@ -128,14 +138,16 @@ describe 'apache::mod::fcgid', :type => :class do
         :id                        => 'root',
         :kernel                    => 'Linux',
         :path                      => '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin',
-        :is_pe                     => false,
+        :is_pe                     => false
       }
     end
 
     it { is_expected.to contain_class("apache::params") }
-    it { is_expected.to contain_apache__mod('fcgid').with({
-      'loadfile_name' => nil,
-    }) }
+    it do
+      is_expected.to contain_apache__mod('fcgid').with(
+        'loadfile_name' => nil
+      )
+    end
     it { is_expected.to contain_package("www-apache/mod_fcgid") }
   end
 end
